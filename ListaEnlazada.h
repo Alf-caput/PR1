@@ -13,6 +13,7 @@ int InsertarFinal(nodo **cabeza, int dato);
 void ImprimirLista(nodo *cabeza);
 int estaVacia(nodo *cabeza);
 int Busqueda(nodo *cabeza, int dato);
+void Borrar(struct nodo **cabeza, int dato);
 
 struct nodo *CrearNodo(int dato)
 {
@@ -85,4 +86,23 @@ int Busqueda(nodo *cabeza, int dato)
         nAux = nAux -> sig; 
     }
     return 0;
+}
+void Borrar (struct nodo**cabeza, int dato)
+{
+	struct nodo *aux = *cabeza, *prev;
+	if (aux != NULL && aux ->dato == dato)
+	{
+		*cabeza = aux -> sig;
+		free(aux);
+		return;
+	}
+	while (aux != NULL && aux->dato != dato) 
+	{
+		prev = aux;
+		aux = aux->sig;
+	}
+	if (aux == NULL)
+    	return;
+    prev->sig = aux->sig;
+    free(aux);
 }
