@@ -25,6 +25,7 @@ void aniadir(geo_localizacion_t elemento, tConjunto *conjunto);
 int cardinal(tConjunto conjunto);
 void quitar(geo_localizacion_t elemento, tConjunto *conjunto);
 void mostrar_conjunto(tConjunto conjunto);
+tConjunto unir_conjuntos(tConjunto conjunto1, tConjunto conjunto2);
 
 tConjunto cjtoVacio()   /*Devuelve un conjunto vacio*/
 {
@@ -116,4 +117,15 @@ void mostrar_conjunto(tConjunto conjunto)
         }
     }
     return;
+}
+
+tConjunto unir_conjuntos(tConjunto conjunto1, tConjunto conjunto2)
+{
+    tConjunto union_conjuntos = conjunto1;
+    int i;
+    for (i = 0; i < cardinal(conjunto2); i++)
+    {
+        aniadir(conjunto2.contenido[i], &union_conjuntos);
+    }
+    return union_conjuntos;
 }

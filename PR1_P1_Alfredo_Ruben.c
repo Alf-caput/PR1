@@ -15,8 +15,9 @@
 #include <stdlib.h>
 #include "geo_conjunto.h"
 
-void leer_fichero(tConjunto *conjunto1, tConjunto *conjunto2);
+void leer_fichero(tConjunto *p_conjunto1, tConjunto *p_conjunto2);
 void mostrar(tConjunto conjunto1, tConjunto conjunto2);
+void unir(tConjunto conjunto1, tConjunto conjunto2);
 
 int main()
 {
@@ -46,7 +47,7 @@ int main()
             mostrar(conjunto1, conjunto2);
             break;
         case 3:
-            /* code */
+            unir(conjunto1, conjunto2);
             break;
         case 4:
             /* code */
@@ -114,5 +115,15 @@ void mostrar(tConjunto conjunto1, tConjunto conjunto2)
     printf("Mostrando conjunto con geolocalizaciones cuya parte entera de la latitud es impar (conjunto 2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
     mostrar_conjunto(conjunto2);
+    return;
+}
+
+void unir(tConjunto conjunto1, tConjunto conjunto2)
+{
+    tConjunto geo_union = unir_conjuntos(conjunto1, conjunto2);
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando conjunto union (conjunto1 + conjunto2)\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    mostrar_conjunto(geo_union);
     return;
 }
