@@ -18,6 +18,8 @@
 void leer_fichero(tConjunto *p_conjunto1, tConjunto *p_conjunto2);
 void mostrar(tConjunto conjunto1, tConjunto conjunto2);
 void unir(tConjunto conjunto1, tConjunto conjunto2);
+void intersectar(tConjunto conjunto1, tConjunto conjunto2);
+void cardinales_conjuntos(tConjunto conjunto1, tConjunto conjunto2);
 
 int main()
 {
@@ -33,10 +35,11 @@ int main()
         \n  3.  Unir conjuntos 1, 2.\
         \n  4.  Interseccion de conjuntos 1 y 2.\
         \n  5.  Cardinal de conjuntos 1 y 2.\
-        \n  6.  Salir del programa.");
-
-        printf("\nIntroduzca opcion (1-6): ");
+        \n  6.  Salir del programa.\n");
+        printf("----------------------------------------------------------------------------------------------\n");
+        printf("Introduzca opcion (1-6): ");
         scanf("%d", &opc);
+        printf("----------------------------------------------------------------------------------------------\n");
 
         switch (opc)
         {
@@ -50,19 +53,19 @@ int main()
             unir(conjunto1, conjunto2);
             break;
         case 4:
-            /* code */
+            intersectar(conjunto1, conjunto2);
             break;
         case 5:
-            /* code */
+            cardinales_conjuntos(conjunto1, conjunto2);
             break;
         case 6:
-            printf("\nSaliendo del programa . . .");
+            printf("Saliendo del programa . . .\n");
             break;
         default:
-            printf("\nOpcion no reconocida, por favor repita la operacion.");
+            printf("Opcion no reconocida, por favor repita la operacion.\n");
             break;
         }
-        printf("\n\n\nPulse enter para continuar . . .");
+        printf("\n\nPulse enter para continuar . . .");
 	    fflush(stdin);
 	    getchar();
 
@@ -83,6 +86,7 @@ void leer_fichero(tConjunto *p_conjunto1, tConjunto *p_conjunto2)
     }
     else
     {   
+        printf("Leyendo el fichero . . .\n");
         for (
             line_count = 0;
             fscanf(pfich, "%lf;%lf", &aux.longitud, &aux.latitud) == 2;
@@ -101,6 +105,9 @@ void leer_fichero(tConjunto *p_conjunto1, tConjunto *p_conjunto2)
         if (fclose(pfich) != 0) {
             printf("Error al cerrar el fichero \"fichnum.csv\"\n");
         }
+        printf("----------------------------------------------------------------------------------------------\n");
+        printf("Fichero leido con exito\n");
+        printf("----------------------------------------------------------------------------------------------\n");
     }
     return;
 }
@@ -125,5 +132,24 @@ void unir(tConjunto conjunto1, tConjunto conjunto2)
     printf("Mostrando conjunto union (conjunto1 + conjunto2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
     mostrar_conjunto(geo_union);
+    return;
+}
+
+void intersectar(tConjunto conjunto1, tConjunto conjunto2)
+{
+    tConjunto geo_interseccion = intersectar_conjuntos(conjunto1, conjunto2);
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando conjunto interseccion (conjunto1 ^ conjunto2)\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    mostrar_conjunto(geo_interseccion);
+    return;
+}
+
+void cardinales_conjuntos(tConjunto conjunto1, tConjunto conjunto2)
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando cardinales(conjunto1, conjunto2)\n");
+    printf("----------------------------------------------------------------------------------------------\n"); 
+    printf("Cardinal conjunto1 = %d, Cardinal conjunto2 = %d\n",cardinal(conjunto1), cardinal(conjunto2));
     return;
 }

@@ -26,6 +26,7 @@ int cardinal(tConjunto conjunto);
 void quitar(geo_localizacion_t elemento, tConjunto *conjunto);
 void mostrar_conjunto(tConjunto conjunto);
 tConjunto unir_conjuntos(tConjunto conjunto1, tConjunto conjunto2);
+tConjunto intersectar_conjuntos(tConjunto conjunto1, tConjunto conjunto2);
 
 tConjunto cjtoVacio()   /*Devuelve un conjunto vacio*/
 {
@@ -125,7 +126,24 @@ tConjunto unir_conjuntos(tConjunto conjunto1, tConjunto conjunto2)
     int i;
     for (i = 0; i < cardinal(conjunto2); i++)
     {
-        aniadir(conjunto2.contenido[i], &union_conjuntos);
+        if (!esta(conjunto2.contenido[i], conjunto1))
+        {
+            aniadir(conjunto2.contenido[i], &union_conjuntos);
+        }
     }
     return union_conjuntos;
+}
+
+tConjunto intersectar_conjuntos(tConjunto conjunto1, tConjunto conjunto2)
+{
+    tConjunto interseccion_conjuntos = cjtoVacio();
+    int i;
+    for (i = 0; i < cardinal(conjunto2); i++)
+    {
+        if (esta(conjunto2.contenido[i], conjunto1))
+        {
+            aniadir(conjunto2.contenido[i], &interseccion_conjuntos);
+        }
+    }
+    return interseccion_conjuntos;
 }
