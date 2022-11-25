@@ -7,15 +7,15 @@ typedef struct nodo
     struct nodo *sig;
 }nodo;
 
-nodo *CrearNodo(int dato);
-int InsertarInicio(nodo **cabeza, int dato);
-int InsertarFinal(nodo **cabeza, int dato);
-void ImprimirLista(nodo *cabeza);
+nodo *crearNodo(int dato);
+int insertarInicio(nodo **cabeza, int dato);
+int insertarFinal(nodo **cabeza, int dato);
+void imprimirLista(nodo *cabeza);
 int estaVacia(nodo *cabeza);
-int Busqueda(nodo *cabeza, int dato);
-void Borrar(struct nodo **cabeza, int dato);
+int busqueda(nodo *cabeza, int dato);
+void borrar(struct nodo **cabeza, int dato);
 
-struct nodo *CrearNodo(int dato)
+struct nodo *crearNodo(int dato)
 {
     nodo *nuevo = NULL;
     nuevo = (nodo*)malloc(sizeof(nodo));
@@ -27,10 +27,10 @@ struct nodo *CrearNodo(int dato)
     return nuevo;
 }
 
-int InsertarInicio(nodo **cabeza, int dato)
+int insertarInicio(nodo **cabeza, int dato)
 {
     nodo *nuevo = NULL;
-    nuevo = CrearNodo(dato);
+    nuevo = crearNodo(dato);
     if (nuevo != NULL)
     {
         nuevo -> sig = *cabeza;
@@ -40,7 +40,7 @@ int InsertarInicio(nodo **cabeza, int dato)
     return 0;
 }
 
-void ImprimirLista(nodo *cabeza)
+void imprimirLista(nodo *cabeza)
 {
     nodo *nAux = cabeza;
     while (nAux != NULL)
@@ -51,10 +51,10 @@ void ImprimirLista(nodo *cabeza)
     return;
 }
 
-int InsertarFinal(nodo **cabeza, int dato)
+int insertarFinal(nodo **cabeza, int dato)
 {
     nodo *nuevo = NULL, *nAux = *cabeza;
-    nuevo = CrearNodo(dato);
+    nuevo = crearNodo(dato);
     if (nuevo != NULL)
     {
         while (nAux -> sig != NULL)
@@ -75,7 +75,7 @@ int estaVacia(nodo *cabeza)
     return 0;
 }
 
-int Busqueda(nodo *cabeza, int dato)
+int busqueda(nodo *cabeza, int dato)
 {
     nodo *nAux = cabeza;
     while (nAux != NULL)
@@ -87,7 +87,7 @@ int Busqueda(nodo *cabeza, int dato)
     }
     return 0;
 }
-void Borrar (struct nodo**cabeza, int dato)
+void borrar (struct nodo**cabeza, int dato)
 {
 	struct nodo *aux = *cabeza, *prev;
 	if (aux != NULL && aux ->dato == dato)
