@@ -15,16 +15,16 @@
 #include <stdlib.h>
 #include "geo_conjunto.h"
 
-void leer_fichero(tConjunto *p_conjunto1, tConjunto *p_conjunto2);
-void mostrar(tConjunto conjunto1, tConjunto conjunto2);
-void unir(tConjunto conjunto1, tConjunto conjunto2);
-void intersectar(tConjunto conjunto1, tConjunto conjunto2);
-void cardinales_conjuntos(tConjunto conjunto1, tConjunto conjunto2);
+void leerFichero(Conjunto *p_conjunto1, Conjunto *p_conjunto2);
+void mostrar(Conjunto conjunto1, Conjunto conjunto2);
+void unir(Conjunto conjunto1, Conjunto conjunto2);
+void intersectar(Conjunto conjunto1, Conjunto conjunto2);
+void obtenerCardinales(Conjunto conjunto1, Conjunto conjunto2);
 
 int main()
 {
     int opc;
-    tConjunto conjunto1 = cjtoVacio(), conjunto2 = cjtoVacio();
+    Conjunto conjunto1 = conjuntoVacio(), conjunto2 = conjuntoVacio();
     do
     {
         printf("==========================================================================\
@@ -44,7 +44,7 @@ int main()
         switch (opc)
         {
         case 1:
-            leer_fichero(&conjunto1, &conjunto2);
+            leerFichero(&conjunto1, &conjunto2);
             break;
         case 2:
             mostrar(conjunto1, conjunto2);
@@ -56,7 +56,7 @@ int main()
             intersectar(conjunto1, conjunto2);
             break;
         case 5:
-            cardinales_conjuntos(conjunto1, conjunto2);
+            obtenerCardinales(conjunto1, conjunto2);
             break;
         case 6:
             printf("Saliendo del programa . . .\n");
@@ -74,10 +74,10 @@ int main()
     return 0;
 }
 
-void leer_fichero(tConjunto *p_conjunto1, tConjunto *p_conjunto2)
+void leerFichero(Conjunto *p_conjunto1, Conjunto *p_conjunto2)
 {
     int line_count;
-    geo_localizacion_t aux;
+    GeoLocalizacion aux;
 
     FILE *pfich = fopen("fichnum.csv", "r");
 
@@ -112,40 +112,40 @@ void leer_fichero(tConjunto *p_conjunto1, tConjunto *p_conjunto2)
     return;
 }
 
-void mostrar(tConjunto conjunto1, tConjunto conjunto2)
+void mostrar(Conjunto conjunto1, Conjunto conjunto2)
 {
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto con geolocalizaciones cuya parte entera de la longitud es par (conjunto 1)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrar_conjunto(conjunto1);
+    mostrarConjunto(conjunto1);
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto con geolocalizaciones cuya parte entera de la latitud es impar (conjunto 2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrar_conjunto(conjunto2);
+    mostrarConjunto(conjunto2);
     return;
 }
 
-void unir(tConjunto conjunto1, tConjunto conjunto2)
+void unir(Conjunto conjunto1, Conjunto conjunto2)
 {
-    tConjunto geo_union = unir_conjuntos(conjunto1, conjunto2);
+    Conjunto geo_union = unirConjuntos(conjunto1, conjunto2);
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto union (conjunto1 + conjunto2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrar_conjunto(geo_union);
+    mostrarConjunto(geo_union);
     return;
 }
 
-void intersectar(tConjunto conjunto1, tConjunto conjunto2)
+void intersectar(Conjunto conjunto1, Conjunto conjunto2)
 {
-    tConjunto geo_interseccion = intersectar_conjuntos(conjunto1, conjunto2);
+    Conjunto geo_interseccion = intersectarConjuntos(conjunto1, conjunto2);
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto interseccion (conjunto1 ^ conjunto2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrar_conjunto(geo_interseccion);
+    mostrarConjunto(geo_interseccion);
     return;
 }
 
-void cardinales_conjuntos(tConjunto conjunto1, tConjunto conjunto2)
+void obtenerCardinales(Conjunto conjunto1, Conjunto conjunto2)
 {
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando cardinales(conjunto1, conjunto2)\n");

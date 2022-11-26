@@ -3,51 +3,51 @@
 
 #define N 100
 
-typedef struct _geo_localizacion
+typedef struct
 {
     double longitud;
     double latitud;
-}geo_localizacion_t;
+}GeoLocalizacion;
 
-typedef struct Conjunto
+typedef struct
 {
-    geo_localizacion_t contenido[N];
+    GeoLocalizacion contenido[N];
     int ultimo; /*Indice del ultimo elemento*/
-}tConjunto;
+}Conjunto;
 
-typedef enum boolean {FALSE = 0, TRUE = 1} tBool; /*Simula booleanos*/
+typedef enum boolean {FALSE = 0, TRUE = 1} Bool; /*Simula booleanos*/
 
-tConjunto cjtoVacio();
-tConjunto unit(geo_localizacion_t elemento);
-tBool esConjuntoVacio(tConjunto conjunto);
-tBool esta(geo_localizacion_t elemento, tConjunto conjunto);
-void aniadir(geo_localizacion_t elemento, tConjunto *conjunto);
-int cardinal(tConjunto conjunto);
-void quitar(geo_localizacion_t elemento, tConjunto *conjunto);
-void mostrar_conjunto(tConjunto conjunto);
-tConjunto unir_conjuntos(tConjunto conjunto1, tConjunto conjunto2);
-tConjunto intersectar_conjuntos(tConjunto conjunto1, tConjunto conjunto2);
+Conjunto conjuntoVacio();
+Conjunto unit(GeoLocalizacion elemento);
+Bool esConjuntoVacio(Conjunto conjunto);
+Bool esta(GeoLocalizacion elemento, Conjunto conjunto);
+void aniadir(GeoLocalizacion elemento, Conjunto *conjunto);
+int cardinal(Conjunto conjunto);
+void quitar(GeoLocalizacion elemento, Conjunto *conjunto);
+void mostrarConjunto(Conjunto conjunto);
+Conjunto unirConjuntos(Conjunto conjunto1, Conjunto conjunto2);
+Conjunto intersectarConjuntos(Conjunto conjunto1, Conjunto conjunto2);
 
-tConjunto cjtoVacio()   /*Devuelve un conjunto vacio*/
+Conjunto conjuntoVacio()   /*Devuelve un conjunto vacio*/
 {
-    tConjunto conjunto;
+    Conjunto conjunto;
     conjunto.ultimo = -1;    /*Conjunto vacio si ultimo elemento esta en posicion -1.*/
     return conjunto;
 }
 
-tConjunto unit(geo_localizacion_t elemento) {
-    tConjunto conjunto;
+Conjunto unit(GeoLocalizacion elemento) {
+    Conjunto conjunto;
     conjunto.ultimo = 0;    // El primer elemento del array en posicion 0. En diapositivas array con indices 1 a N
     conjunto.contenido[conjunto.ultimo] = elemento; // Se pone el elemento en la primera posicion del array
     return conjunto;
 }
 
-tBool esConjuntoVacio(tConjunto conjunto) {
-    return conjunto.ultimo==-1;     // Si el ultimo elemento esta en posicion -1 es que el conjunto esta vacio. Ver cjtoVacio()
+Bool esConjuntoVacio(Conjunto conjunto) {
+    return conjunto.ultimo==-1;     // Si el ultimo elemento esta en posicion -1 es que el conjunto esta vacio. Ver conjuntoVacio()
 }
 
-tBool esta(geo_localizacion_t elemento, tConjunto conjunto){
-    tBool encontrado = FALSE;
+Bool esta(GeoLocalizacion elemento, Conjunto conjunto){
+    Bool encontrado = FALSE;
     int i = 0;
     while(!encontrado && i<=conjunto.ultimo) {
         encontrado = (
@@ -58,7 +58,7 @@ tBool esta(geo_localizacion_t elemento, tConjunto conjunto){
     return encontrado;
 }
 
-void aniadir(geo_localizacion_t elemento, tConjunto *conjunto){
+void aniadir(GeoLocalizacion elemento, Conjunto *conjunto){
     if (!esta(elemento, *conjunto)) {
         // Elemento no esta dentro
         if (conjunto->ultimo < (N-1) )  { // Con 'conjunto->ultimo < N' desbordabamos la capacidad
@@ -75,11 +75,11 @@ void aniadir(geo_localizacion_t elemento, tConjunto *conjunto){
     }
 }
 
-int cardinal(tConjunto conjunto){  /*Devuelve el numero de elementos del conjunto*/
+int cardinal(Conjunto conjunto){  /*Devuelve el numero de elementos del conjunto*/
     return conjunto.ultimo+1;
 }
 
-void quitar(geo_localizacion_t elemento, tConjunto *conjunto){
+void quitar(GeoLocalizacion elemento, Conjunto *conjunto){
     int i = 0;
     // Bucle que simplemente itera hasta encontar elemento en conjunto.
     //   Si lo encuentra, i almacenara su posicion.
@@ -102,10 +102,10 @@ void quitar(geo_localizacion_t elemento, tConjunto *conjunto){
     }
 }
 
-void mostrar_conjunto(tConjunto conjunto)
+void mostrarConjunto(Conjunto conjunto)
 {
     int i;
-    geo_localizacion_t elemento;
+    GeoLocalizacion elemento;
     if (esConjuntoVacio(conjunto))
     {
         printf("No hay elementos en el conjunto\n");
@@ -120,9 +120,9 @@ void mostrar_conjunto(tConjunto conjunto)
     return;
 }
 
-tConjunto unir_conjuntos(tConjunto conjunto1, tConjunto conjunto2)
+Conjunto unirConjuntos(Conjunto conjunto1, Conjunto conjunto2)
 {
-    tConjunto union_conjuntos = conjunto1;
+    Conjunto union_conjuntos = conjunto1;
     int i;
     for (i = 0; i < cardinal(conjunto2); i++)
     {
@@ -134,9 +134,9 @@ tConjunto unir_conjuntos(tConjunto conjunto1, tConjunto conjunto2)
     return union_conjuntos;
 }
 
-tConjunto intersectar_conjuntos(tConjunto conjunto1, tConjunto conjunto2)
+Conjunto intersectarConjuntos(Conjunto conjunto1, Conjunto conjunto2)
 {
-    tConjunto interseccion_conjuntos = cjtoVacio();
+    Conjunto interseccion_conjuntos = conjuntoVacio();
     int i;
     for (i = 0; i < cardinal(conjunto2); i++)
     {
