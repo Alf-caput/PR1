@@ -1,76 +1,123 @@
-#include <stdlib.h>
-#include <limits.h>
 #include <stdio.h>
-
-struct nodo
+#include <stdlib.h>
+/*Definicion del tipo de elementos de la cola*/
+typedef struct
 {
-    int data;
-    struct nodo* sig;
-}nodo;
+    double longitud;
+    double latitud;
+}GeoLocalizacion;
 
-struct cola
-{
-    struct nodo *primero, *ultimo;
-}cola;
+typedef GeoLocalizacion ElementoCola;
 
-struct nodo* crearNodo(int data)
+#define MAX_ELEMENTOS 100
+#define ELEMENTO_NULO {.longitud = 0, .latitud = 0}
+
+/*Definicion del tipo Cola*/
+typedef struct _cola
 {
-    struct nodo* nuevo = (struct nodo*) malloc(sizeof(struct nodo));
-    nuevo -> data = data;
-    nuevo -> sig = NULL;
-    return nuevo;
+    int ultimo;
+    ElementoCola datos[MAX_ELEMENTOS];
+}_Cola;
+
+typedef _Cola* Cola;/*Ocultamos al usuario el uso de punteros definiendo el tipo Cola como un puntero a la estructura _Cola*/
+typedef enum {FALSE = 0, TRUE = 1} Bool;/*Enumeracion para simular booleanos (realizado por claridad del TAD))*/
+
+Cola crearCola();
+void mostrarCola(Cola cola);
+Bool esColaVacia(Cola cola);
+Bool esColaLlena(Cola cola);
+Bool encolar(ElementoCola dato, Cola cola);
+ElementoCola decolar(Cola cola);
+void eliminarCola(Cola cola);
+
+Cola crearCola()/*Crea una cola*/
+{
+    Cola cola = (Cola) malloc(sizeof (_Cola));
+    cola -> ultimo = -1;
+    printf("Cola creada con exito.\n");
+    return cola;
 }
 
-struct cola* crearCola()
+void mostrarCola(Cola cola)/*Muestra la cola*/
 {
-    struct cola* c = (struct cola*) malloc(sizeof(struct cola));
-    c -> primero = c -> ultimo = NULL;
-    return c;
-}
-
-void encolar(int data, struct cola** c)
-{
-    struct nodo* nuevo = crearNodo(data);
-    // Si la cola esta vacia = NULL
-    if ((*c) -> primero == NULL)
+    int i;
+    if (esColaVacia(cola))
     {
-        (*c) -> primero = (*c) -> ultimo = nuevo; // Sera el primero y el ultimo
-        return;
-    } 
-    // Si la cola NO esta vacia
-    (*c) -> ultimo -> sig = nuevo;
-    (*c) -> ultimo = nuevo;
+        printf("No hay elementos en cola.\n");
+    }
+    else
+    {
+        for (i = 0; i < cola -> ultimo + 1; i++)
+        {
+            printf("geo[%d]: longitud=%lf, latitud=%lf\n", i, cola->datos[i].longitud, cola->datos[i].latitud);
+        }
+    }
     return;
 }
 
-int desencolar (struct cola** c)
+Bool esColaVacia(Cola cola)/*Comprueba si la cola esta vacia*/
 {
-    // Si no hay ningun elemento en la cola
-    if ((*c) -> primero==NULL) return INT_MIN;
-    // Si la cola esta vacia
-    struct nodo* eliminado = (*c)->primero;
-    int data = eliminado -> data;
-    // Eliminamos elemento (Nodo) cola
-    (*c)->primero = eliminado->sig;
-    // Si la cola tiene 1 elemento
-    if ((*c) -> primero == NULL)
+    if (cola -> ultimo == -1)
     {
-        (*c) -> ultimo == NULL;
+        return TRUE;
     }
-    free(eliminado); // Liberamos el nodo
-    return data;
+    else
+    {
+        return FALSE;
+    }
 }
 
-void mostrar (struct cola** c)
+Bool esColaLlena(Cola cola)/*Comprueba si la pila esta llena*/
 {
-    if ((*c) -> primero == NULL) return; // Si no hay elementos no hago nada
-    printf("Primero: %d\nUltimo: %d\n", (*c)->primero->data, (*c)->ultimo->data); // Imprimo elementos
-    struct nodo* actual = (*c) -> primero; // Guardo en variable actual
-    while (actual)
+    if (cola -> ultimo == MAX_ELEMENTOS-1)
     {
-        printf("%d ", actual->data);
-        actual = actual -> sig;
+        return TRUE;
     }
-    printf("\n----------------------\n");
+    else
+    {
+        return FALSE;
+    }
+}
+
+Bool encolar(ElementoCola dato, Cola cola)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
+{
+    if (cola -> ultimo < MAX_ELEMENTOS - 1)
+    {
+        cola -> ultimo++;
+        cola -> datos[cola -> ultimo] = dato;
+        return TRUE;
+    }
+    else
+    {
+        printf("No se pudo encolar el elemento, la cola estaba llena.\n");
+        return FALSE;
+    }
+}
+
+ElementoCola desencolar(Cola cola)/*Saca al primer elemento que entro y lo devuelve*/
+{
+    int i;
+    ElementoCola dato = ELEMENTO_NULO, aux;
+    if (esColaVacia(cola))
+    {
+        printf("No habia elementos en la cola, devolviendo elemento nulo . . .\n");
+    }
+    else
+    {
+        dato = cola -> datos[0];
+        for (i = 0; i < cola -> ultimo; i++)
+        {
+            cola -> datos[i] = cola -> datos[i+1];
+        }
+        cola -> ultimo--;
+    }
+    return dato;
+}
+
+void eliminarCola(Cola cola)/*Elimina la cola y libera la memoria*/
+{
+    free(cola);
+    cola = NULL;
+    printf("Cola eliminada de memoria.\n");
     return;
 }
