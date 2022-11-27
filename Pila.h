@@ -1,74 +1,118 @@
-#include <stdlib.h>
 #include <stdio.h>
-#define MAX_ELEMENTOS 10
-
-typedef struct pila
+#include <stdlib.h>
+/*Definicion del tipo de elementos de la pila*/
+typedef struct
 {
-    int indice;
-    int total;
-    int datos[MAX_ELEMENTOS];
-}Pila;
+    double longitud;
+    double latitud;
+}GeoLocalizacion;
 
-Pila *crear (){
-    Pila *p;
-    p = (Pila *) malloc(sizeof(Pila));
-    p -> indice = 0;
-    p -> total = 0;
-    printf("Pila creada con exito\n");
-    return p;
+typedef GeoLocalizacion ElementoPila;
+
+#define MAX_ELEMENTOS 100
+#define ELEMENTO_NULO {.longitud = 0, .latitud = 0}
+
+/*Definicion del tipo pila*/
+typedef struct
+{
+    int cima;
+    ElementoPila datos[MAX_ELEMENTOS];
+}_Pila;
+
+typedef _Pila* Pila;/*Ocultamos al usuario el uso de punteros definiendo el tipo Pila como un puntero a la estructura _Pila*/
+typedef enum {FALSE = 0, TRUE = 1} Bool;/*Enumeracion para simular booleanos (realizado por claridad del TAD))*/
+
+Pila crearPila();
+void mostrarPila(Pila pila);
+Bool esPilaVacia(Pila pila);
+Bool esPilaLlena(Pila pila);
+Bool apilar(ElementoPila dato, Pila pila);
+ElementoPila desapilar(Pila pila);
+void eliminarPila(Pila pila);
+
+Pila crearPila()/*Crea una pila*/
+{
+    Pila pila = (Pila) malloc(sizeof(_Pila));
+    pila -> cima = -1;
+    printf("Pila creada con exito.\n");
+    return pila;
 }
 
-int estaVacia (Pila pila)
+void mostrarPila(Pila pila)/*Muestra la pila*/
 {
-    if (pila.total == 0)
+    int i;
+    if (esPilaVacia(pila))
     {
-        return 1;
+        printf("No hay elementos apilados.\n");
     }
     else
     {
-        return 0;
+        for (i = pila -> cima; i > -1; i--)
+        {
+            printf("geo[%d]: longitud=%lf, latitud=%lf\n", i, pila->datos[i].longitud, pila->datos[i].latitud);
+        }
     }
+    return;
 }
 
-int estaLlena (Pila pila)
+Bool esPilaVacia(Pila pila)/*Comprueba si la pila esta vacia*/
 {
-    if (pila.total == 10)
+    if (pila -> cima == -1)
     {
-        return 1;
+        return TRUE;
     }
     else
     {
-        return 0;
+        return FALSE;
     }
 }
 
-int push (Pila *pila, int dato)
+Bool esPilaLlena(Pila pila)/*Comprueba si la pila esta llena*/
 {
-    if (pila -> total < MAX_ELEMENTOS)
+    if (pila -> cima == MAX_ELEMENTOS-1)
     {
-        pila -> datos[pila -> indice] = dato;
-        pila -> indice ++;
-        pila -> total ++;
-        return 1;
+        return TRUE;
     }
     else
     {
-        return 0;
+        return FALSE;
     }
 }
 
-int pop (Pila *pila)
+Bool apilar(ElementoPila dato, Pila pila)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
 {
-    int aux;
-    if (pila -> total > 0)
+    if (pila -> cima < MAX_ELEMENTOS - 1)
     {
-        aux = pila -> datos[pila -> indice - 1];
-        pila -> indice --;
-        pila -> total --;
-        return aux;
+        pila -> cima++;
+        pila -> datos[pila -> cima] = dato;
+        return TRUE;
     }
     else
     {
-        return -1;
+        printf("No se pudo apilar el elemento, la pila estaba llena.\n");
+        return FALSE;
     }
+}
+
+ElementoPila desapilar(Pila pila)/*Desapila un elemento y lo devuelve*/
+{
+    ElementoPila dato = ELEMENTO_NULO;
+    if (esPilaVacia(pila))
+    {
+        printf("No habia elementos en la pila, devolviendo elemento nulo . . .\n");
+    }
+    else
+    {
+        dato = pila -> datos[pila -> cima];
+        pila -> cima--;
+    }
+    return dato;
+}
+
+void eliminarPila(Pila pila)/*Elimina la pila y libera la memoria*/
+{
+    free(pila);
+    pila = NULL;
+    printf("Pila eliminada de memoria.");
+    return;
 }
