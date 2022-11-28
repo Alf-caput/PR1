@@ -1,108 +1,94 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct nodo
-{
-    int dato;
-    struct nodo *sig;
-}nodo;
+typedef struct nodo Nodo;
 
-nodo *crearNodo(int dato);
-int insertarInicio(nodo **cabeza, int dato);
-int insertarFinal(nodo **cabeza, int dato);
-void imprimirLista(nodo *cabeza);
-int estaVacia(nodo *cabeza);
-int busqueda(nodo *cabeza, int dato);
-void borrar(struct nodo **cabeza, int dato);
+typedef struct lista Lista;
 
-struct nodo *crearNodo(int dato)
+typedef struct
 {
-    nodo *nuevo = NULL;
-    nuevo = (nodo*)malloc(sizeof(nodo));
-    if (nuevo != NULL)
-    {
-        nuevo -> dato = dato;
-        nuevo -> sig = NULL;
-    }
-    return nuevo;
-}
+	double longitud;
+	double latitud;
+}ElementoLista;
 
-int insertarInicio(nodo **cabeza, int dato)
+struct nodo
 {
-    nodo *nuevo = NULL;
-    nuevo = crearNodo(dato);
-    if (nuevo != NULL)
-    {
-        nuevo -> sig = *cabeza;
-        *cabeza = nuevo;
-        return 1;
-    }
-    return 0;
-}
+	ElementoLista elemento;
+	struct nodo* sig;
+};
 
-void imprimirLista(nodo *cabeza)
+struct lista
 {
-    nodo *nAux = cabeza;
-    while (nAux != NULL)
-    {
-        printf("%d ", nAux -> dato);
-        nAux = nAux -> sig;
-    }
-    return;
-}
+	Nodo* cabeza;
+};
 
-int insertarFinal(nodo **cabeza, int dato)
+Nodo *crearNodo(ElementoLista elemento)
 {
-    nodo *nuevo = NULL, *nAux = *cabeza;
-    nuevo = crearNodo(dato);
-    if (nuevo != NULL)
-    {
-        while (nAux -> sig != NULL)
-        {
-            nAux = nAux -> sig;
-        }
-        nAux -> sig = nuevo;
-        return 1;
-    }
-    return 0;
-}
-
-int estaVacia(nodo *cabeza)
-{
-    if (cabeza == NULL)
-    return 1;
-    else
-    return 0;
-}
-
-int busqueda(nodo *cabeza, int dato)
-{
-    nodo *nAux = cabeza;
-    while (nAux != NULL)
-    {
-        if (nAux -> dato == dato)
-        return 1;
-
-        nAux = nAux -> sig; 
-    }
-    return 0;
-}
-void borrar (struct nodo**cabeza, int dato)
-{
-	struct nodo *aux = *cabeza, *prev;
-	if (aux != NULL && aux ->dato == dato)
+	Nodo* nuevoNodo = malloc(sizeof(Nodo));
+	if (!nuevoNodo) 
 	{
-		*cabeza = aux -> sig;
-		free(aux);
-		return;
-	}
-	while (aux != NULL && aux->dato != dato) 
+    	return NULL;
+  	}
+	nuevoNodo -> elemento = elemento;
+	nuevoNodo -> sig = NULL;
+	return nuevoNodo;
+}
+
+Lista* hacerLista()
+{
+	Lista* lista = malloc(sizeof(Lista));
+	if (!lista) 
 	{
-		prev = aux;
-		aux = aux->sig;
-	}
-	if (aux == NULL)
+    	return NULL;
+  	}
+	lista->cabeza = NULL;
+	return lista;
+}
+
+void mostrarLista(Lista* lista)
+{
+	Nodo* actual = lista->cabeza;
+	if(lista->cabeza == NULL) 
     	return;
-    prev->sig = aux->sig;
-    free(aux);
+	for(; actual != NULL; actual = actual->sig) 
+	{
+		printf("%d\n", actual->elemento);
+	}
 }
+
+void insertarElemento(ElementoLista elemento, Lista* lista)
+{
+	Nodo* actual = NULL;
+	if(lista -> cabeza == NULL)
+	{
+		lista -> cabeza = crearNodo(elemento);
+	}
+	else 
+	{
+    	actual = lista -> cabeza; 
+    	while (actual -> sig != NULL)
+		{
+      		actual = actual -> sig;
+    	}
+		actual -> sig = crearNodo(elemento);
+	}
+}
+
+void eliminarElemento(ElementoLista elemento, Lista* lista)
+{
+	Nodo* actual = lista -> cabeza;            
+	Nodo* ant = actual;           
+	while(actual != NULL)
+	{
+		if(actual -> elemento == elemento)
+		{      
+			ant -> sig = actual -> sig;
+      		if(actual == lista -> cabeza)
+        		lista -> cabeza = actual -> sig;
+      		free(actual);
+      		return;
+		}
+    	ant = actual;             
+    	actual = actual -> sig;        
+  	}                                 
+}                 

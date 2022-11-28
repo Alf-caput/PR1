@@ -14,77 +14,67 @@
 #include "ListaEnlazada.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define MAX 20
 
-struct archivoNodo
-{
-	char *longitud;
-	char *latitud;
-	struct archivoNodo* sig;
-}*cabeza;
-
-FILE *pfich;
-
-void insertarEntrada(char *lt, char *la);
+void leerGeolocalizacion(Lista *lista);
 
 int main()
 {
+	Lista lista;
+	int line_count;
+	ElementoLista aux;
+	int opc;
+	float longitud, latitud;
+	FILE *pfich;
 	pfich = fopen("fichnum.csv", "r");
 	int i;
-	char longitud[MAX];
-	char latitud[MAX];
 	if (pfich == NULL)
 	{
 		printf("Error: no se puede abrir el archivo fichnum.csv");
 	}
 	else
 	{
-		do
+		printf("Leyendo el fichero...\n");
+		for(
+			line_count = 0; 
+			fscanf(pfich,"%lf;%lf",&aux.longitud, &aux.latitud) == 2;
+			line_count++)
 		{
-			fgets(longitud, MAX, pfich);
-        	fgets(latitud, MAX, pfich);
-        	i = 0;
-        	while(longitud[i] != '\n')
-        	{
-            	i++;
-        	}
-        	longitud[i] = '\0';
-        	i = 0;
-        	while(latitud[i] != '\n')
-        	{
-            	i++;
-        	}
-        	latitud[i] = '\0';
-        	insertarEntrada(longitud, latitud);
+			insertarInicio(aux,lista);
 		}
-		while (!feof(pfich));
 	}
+	do{
+		printf("==========================================================================\
+	    \n                                     MENU\
+	    \n==========================================================================");
+	    printf("\n  1.  Introducir geolocalizacion.\
+	    \n  2.  Eliminar geolocalizacion.\
+	    \n  3.  Mostrar lista.\
+	    \n  4.  Salir del programa.\n");
+	    printf("----------------------------------------------------------------------------------------------\n");
+	    printf("Introduzca opcion (1-4): ");
+	    scanf("%d", &opc);
+	    printf("----------------------------------------------------------------------------------------------\n");
+		switch(opc)
+		{
+			case 1:
+				printf("Introduzca la longitud y la latitud de la coordenada: ");
+				scanf("%f , %f \n",&longitud,&latitud);
+				//leerGeolocalizacion(longitud,latitud);
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			case 4:
+				printf("Saliendo del programa...\n");
+				break;
+			default:
+				printf("Opcion no reconocida, repita la operacion.\n");
+		}        
+		printf("\n\nPulse enter para continuar . . .");
+		fflush(stdin);
+		getchar();
+	    system("cls");
+    }while (opc != 4);    
+	return 0;
 }
-
-void insertarEntrada(char *lt, char *la)
-{
-    struct archivoNodo *aux, * iterador;
-    aux = (struct archivoNodo *)malloc(sizeof(struct archivoNodo));
-	aux -> longitud = (char *)malloc(strlen(lt)+1);
-	strcpy(aux -> longitud, lt);
-	aux -> latitud = (char *)malloc(strlen(la)+1);
-	strcpy(aux -> latitud, la);
-    iterador = cabeza;
-
-    if (cabeza == NULL)
-    {
-        cabeza = aux;
-        cabeza -> sig = NULL;
-    }
-
-    else
-    {
-        while(iterador->sig != NULL)
-        {
-            iterador = iterador -> sig;
-        }
-        aux -> sig = NULL;
-        iterador-> sig = aux;
-    }
-}
-
