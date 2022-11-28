@@ -1,32 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 /*Definicion del tipo de elementos de la cola*/
 typedef struct
 {
     double longitud;
     double latitud;
-}GeoLocalizacion;
-
-typedef GeoLocalizacion ElementoCola;
+}ElementoCola;
 
 #define MAX_ELEMENTOS 100
 #define ELEMENTO_NULO {.longitud = 0, .latitud = 0}
 
 /*Definicion del tipo Cola*/
-typedef struct _cola
+typedef struct
 {
     int ultimo;
     ElementoCola datos[MAX_ELEMENTOS];
 }_Cola;
 
 typedef _Cola* Cola;/*Ocultamos al usuario el uso de punteros definiendo el tipo Cola como un puntero a la estructura _Cola*/
-typedef enum {FALSE = 0, TRUE = 1} Bool;/*Enumeracion para simular booleanos (realizado por claridad del TAD))*/
 
 Cola crearCola();
 void mostrarCola(Cola cola);
-Bool esColaVacia(Cola cola);
-Bool esColaLlena(Cola cola);
-Bool encolar(ElementoCola dato, Cola cola);
+bool esColaVacia(Cola cola);
+bool esColaLlena(Cola cola);
+bool encolar(ElementoCola dato, Cola cola);
 ElementoCola decolar(Cola cola);
 void eliminarCola(Cola cola);
 
@@ -55,49 +53,49 @@ void mostrarCola(Cola cola)/*Muestra la cola*/
     return;
 }
 
-Bool esColaVacia(Cola cola)/*Comprueba si la cola esta vacia*/
+bool esColaVacia(Cola cola)/*Comprueba si la cola esta vacia*/
 {
     if (cola -> ultimo == -1)
     {
-        return TRUE;
+        return true;
     }
     else
     {
-        return FALSE;
+        return false;
     }
 }
 
-Bool esColaLlena(Cola cola)/*Comprueba si la pila esta llena*/
+bool esColaLlena(Cola cola)/*Comprueba si la pila esta llena*/
 {
     if (cola -> ultimo == MAX_ELEMENTOS-1)
     {
-        return TRUE;
+        return true;
     }
     else
     {
-        return FALSE;
+        return false;
     }
 }
 
-Bool encolar(ElementoCola dato, Cola cola)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
+bool encolar(ElementoCola dato, Cola cola)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
 {
     if (cola -> ultimo < MAX_ELEMENTOS - 1)
     {
         cola -> ultimo++;
         cola -> datos[cola -> ultimo] = dato;
-        return TRUE;
+        return true;
     }
     else
     {
         printf("No se pudo encolar el elemento, la cola estaba llena.\n");
-        return FALSE;
+        return false;
     }
 }
 
 ElementoCola desencolar(Cola cola)/*Saca al primer elemento que entro y lo devuelve*/
 {
     int i;
-    ElementoCola dato = ELEMENTO_NULO, aux;
+    ElementoCola dato = ELEMENTO_NULO;
     if (esColaVacia(cola))
     {
         printf("No habia elementos en la cola, devolviendo elemento nulo . . .\n");

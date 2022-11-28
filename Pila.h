@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 /*Definicion del tipo de elementos de la pila*/
 typedef struct
 {
     double longitud;
     double latitud;
-}GeoLocalizacion;
-
-typedef GeoLocalizacion ElementoPila;
+}ElementoPila;
 
 #define MAX_ELEMENTOS 100
 #define ELEMENTO_NULO {.longitud = 0, .latitud = 0}
@@ -20,13 +19,12 @@ typedef struct
 }_Pila;
 
 typedef _Pila* Pila;/*Ocultamos al usuario el uso de punteros definiendo el tipo Pila como un puntero a la estructura _Pila*/
-typedef enum {FALSE = 0, TRUE = 1} Bool;/*Enumeracion para simular booleanos (realizado por claridad del TAD))*/
 
 Pila crearPila();
 void mostrarPila(Pila pila);
-Bool esPilaVacia(Pila pila);
-Bool esPilaLlena(Pila pila);
-Bool apilar(ElementoPila dato, Pila pila);
+bool esPilaVacia(Pila pila);
+bool esPilaLlena(Pila pila);
+bool apilar(ElementoPila dato, Pila pila);
 ElementoPila desapilar(Pila pila);
 void eliminarPila(Pila pila);
 
@@ -55,42 +53,42 @@ void mostrarPila(Pila pila)/*Muestra la pila*/
     return;
 }
 
-Bool esPilaVacia(Pila pila)/*Comprueba si la pila esta vacia*/
+bool esPilaVacia(Pila pila)/*Comprueba si la pila esta vacia*/
 {
     if (pila -> cima == -1)
     {
-        return TRUE;
+        return true;
     }
     else
     {
-        return FALSE;
+        return false;
     }
 }
 
-Bool esPilaLlena(Pila pila)/*Comprueba si la pila esta llena*/
+bool esPilaLlena(Pila pila)/*Comprueba si la pila esta llena*/
 {
     if (pila -> cima == MAX_ELEMENTOS-1)
     {
-        return TRUE;
+        return true;
     }
     else
     {
-        return FALSE;
+        return false;
     }
 }
 
-Bool apilar(ElementoPila dato, Pila pila)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
+bool apilar(ElementoPila dato, Pila pila)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
 {
     if (pila -> cima < MAX_ELEMENTOS - 1)
     {
         pila -> cima++;
         pila -> datos[pila -> cima] = dato;
-        return TRUE;
+        return true;
     }
     else
     {
         printf("No se pudo apilar el elemento, la pila estaba llena.\n");
-        return FALSE;
+        return false;
     }
 }
 
