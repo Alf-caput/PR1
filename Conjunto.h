@@ -19,7 +19,9 @@ typedef _Conjunto* Conjunto;
 
 Conjunto crearConjunto(int capacidad);
 void mostrarConjunto(Conjunto conjunto);
+void mostrarPagConjunto(Conjunto conjunto, int num_datos_pag);
 bool esConjuntoVacio(Conjunto conjunto);
+bool esConjuntoLleno(Conjunto conjunto);
 bool aniadirAlConjunto(ElementoConjunto dato, Conjunto conjunto);
 bool estaEnConjunto(ElementoConjunto dato, Conjunto conjunto);
 int cardinalConjunto(Conjunto conjunto);
@@ -35,7 +37,7 @@ Conjunto crearConjunto(int capacidad)
     conjunto -> ultimo = -1;
     conjunto -> capacidad = capacidad;
     conjunto -> datos = (ElementoConjunto*) malloc(sizeof(ElementoConjunto) * capacidad);
-    printf("Conjunto creado con exito.\n");
+    //printf("Conjunto creado con exito.\n");
     return conjunto;
 }
 
@@ -54,6 +56,46 @@ void mostrarConjunto(Conjunto conjunto)
             printf("geo[%d]: longitud=%lf, latitud=%lf\n", i, conjunto -> datos[i].longitud, conjunto -> datos[i].latitud);
         }
     }
+    return;
+}
+
+void mostrarPagConjunto(Conjunto conjunto, int num_datos_pag)
+{
+    int i, opc;
+    ElementoConjunto elemento;
+    if (esConjuntoVacio(conjunto))
+    {
+        printf("No hay elementos en el conjunto\n");
+    }
+    else
+    {
+        for (i = 0; i < cardinalConjunto(conjunto); i++)
+        {
+            printf("geo[%d]: longitud=%lf, latitud=%lf\n", i, conjunto -> datos[i].longitud, conjunto -> datos[i].latitud);
+            if ((i+1) % num_datos_pag == 0 || i == cardinalConjunto(conjunto)-1)
+            {
+                do
+                {
+                    printf("\nPulse 0 para salir del conjunto actual y 1 para ir a la siguiente pagina: ");
+                    fflush(stdin);
+                    scanf("%d", &opc);
+                    printf("\n");
+                    if (opc != 0 && opc != 1)   
+                    {
+                        printf("Opcion no valida, por favor vuelva a introducir.\n");
+                    }
+                    else
+                    {
+                        break;
+                    }
+                } while (true);
+                if (!opc)
+                {
+                    break;
+                }
+            }
+        }
+    }  
     return;
 }
 
@@ -179,6 +221,6 @@ void eliminarConjunto(Conjunto conjunto)
     conjunto -> datos = NULL;
     free(conjunto);
     conjunto = NULL;
-    printf("Conjunto eliminado de memoria.\n");
+    //printf("Conjunto eliminado de memoria.\n");
     return;
 }

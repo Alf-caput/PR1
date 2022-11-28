@@ -62,6 +62,8 @@ int main()
             break;
         case 6:
             printf("Saliendo del programa . . .\n");
+            eliminarConjunto(conjunto1);
+            eliminarConjunto(conjunto2);
             break;
         default:
             printf("Opcion no reconocida, por favor repita la operacion.\n");
@@ -119,11 +121,11 @@ void mostrar(Conjunto conjunto1, Conjunto conjunto2)
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto con geolocalizaciones cuya parte entera de la longitud es par (conjunto 1)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrarConjunto(conjunto1);
+    mostrarPagConjunto(conjunto1, 20);
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto con geolocalizaciones cuya parte entera de la latitud es impar (conjunto 2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrarConjunto(conjunto2);
+    mostrarPagConjunto(conjunto2, 20);
     return;
 }
 
@@ -133,7 +135,8 @@ void unir(Conjunto conjunto1, Conjunto conjunto2)
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto union (conjunto1 + conjunto2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrarConjunto(geo_union);
+    mostrarPagConjunto(geo_union, 20);
+    eliminarConjunto(geo_union);
     return;
 }
 
@@ -143,7 +146,8 @@ void intersectar(Conjunto conjunto1, Conjunto conjunto2)
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto interseccion (conjunto1 ^ conjunto2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrarConjunto(geo_interseccion);
+    mostrarPagConjunto(geo_interseccion, 20);
+    eliminarConjunto(geo_interseccion);
     return;
 }
 
