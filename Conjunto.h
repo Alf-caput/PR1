@@ -26,6 +26,7 @@ int cardinalConjunto(Conjunto conjunto);
 bool quitarDelConjunto(ElementoConjunto elemento, Conjunto conjunto);
 Conjunto unirConjuntos(Conjunto conjunto1, Conjunto conjunto2);
 Conjunto intersectarConjuntos(Conjunto conjunto1, Conjunto conjunto2);
+Conjunto copiaConjunto(Conjunto conjunto);
 void eliminarConjunto(Conjunto conjunto);
 
 Conjunto crearConjunto(int capacidad)
@@ -34,6 +35,7 @@ Conjunto crearConjunto(int capacidad)
     conjunto -> ultimo = -1;
     conjunto -> capacidad = capacidad;
     conjunto -> datos = (ElementoConjunto*) malloc(sizeof(ElementoConjunto) * capacidad);
+    printf("Conjunto creado con exito.\n");
     return conjunto;
 }
 
@@ -134,7 +136,7 @@ bool quitarDelConjunto(ElementoConjunto dato, Conjunto conjunto)
 
 Conjunto unirConjuntos(Conjunto conjunto1, Conjunto conjunto2)
 {
-    Conjunto union_conjuntos = conjunto1;
+    Conjunto union_conjuntos = copiaConjunto(conjunto1);
     int i;
     for (i = 0; i < cardinalConjunto(conjunto2); i++)
     {
@@ -160,11 +162,23 @@ Conjunto intersectarConjuntos(Conjunto conjunto1, Conjunto conjunto2)
     return interseccion_conjuntos;
 }
 
+Conjunto copiaConjunto(Conjunto conjunto)
+{
+    Conjunto copia = crearConjunto(conjunto -> capacidad);
+    int i;
+    for (i = 0; i < cardinalConjunto(conjunto); i++)
+    {
+        aniadirAlConjunto(conjunto -> datos[i], copia);
+    }
+    return copia;
+}
+
 void eliminarConjunto(Conjunto conjunto)
 {
     free(conjunto -> datos);
     conjunto -> datos = NULL;
     free(conjunto);
     conjunto = NULL;
+    printf("Conjunto eliminado de memoria.\n");
     return;
 }
