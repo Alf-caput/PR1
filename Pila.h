@@ -8,19 +8,19 @@ typedef struct
     double latitud;
 }ElementoPila;
 
-#define MAX_ELEMENTOS 100
 #define ELEMENTO_NULO {.longitud = 0, .latitud = 0}
 
 /*Definicion del tipo pila*/
 typedef struct
 {
     int cima;
-    ElementoPila datos[MAX_ELEMENTOS];
+    int capacidad;
+    ElementoPila *datos;
 }_Pila;
 
 typedef _Pila* Pila;/*Ocultamos al usuario el uso de punteros definiendo el tipo Pila como un puntero a la estructura _Pila*/
 
-Pila crearPila();
+Pila crearPila(int capacidad);
 void mostrarPila(Pila pila);
 bool esPilaVacia(Pila pila);
 bool esPilaLlena(Pila pila);
@@ -28,10 +28,12 @@ bool apilar(ElementoPila dato, Pila pila);
 ElementoPila desapilar(Pila pila);
 void eliminarPila(Pila pila);
 
-Pila crearPila()/*Crea una pila*/
+Pila crearPila(int capacidad)/*Crea una pila*/
 {
     Pila pila = (Pila) malloc(sizeof(_Pila));
     pila -> cima = -1;
+    pila -> capacidad = capacidad;
+    pila -> datos = (ElementoPila*) malloc(sizeof(ElementoPila) * capacidad);
     printf("Pila creada con exito.\n");
     return pila;
 }
@@ -67,7 +69,7 @@ bool esPilaVacia(Pila pila)/*Comprueba si la pila esta vacia*/
 
 bool esPilaLlena(Pila pila)/*Comprueba si la pila esta llena*/
 {
-    if (pila -> cima == MAX_ELEMENTOS-1)
+    if (pila -> cima == pila -> capacidad - 1)
     {
         return true;
     }
@@ -79,7 +81,7 @@ bool esPilaLlena(Pila pila)/*Comprueba si la pila esta llena*/
 
 bool apilar(ElementoPila dato, Pila pila)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
 {
-    if (pila -> cima < MAX_ELEMENTOS - 1)
+    if (pila -> cima < pila -> capacidad - 1)
     {
         pila -> cima++;
         pila -> datos[pila -> cima] = dato;
@@ -109,6 +111,8 @@ ElementoPila desapilar(Pila pila)/*Desapila un elemento y lo devuelve*/
 
 void eliminarPila(Pila pila)/*Elimina la pila y libera la memoria*/
 {
+    free(pila -> datos);
+    pila -> datos = NULL;
     free(pila);
     pila = NULL;
     printf("Pila eliminada de memoria.");

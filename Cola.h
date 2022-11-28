@@ -8,19 +8,19 @@ typedef struct
     double latitud;
 }ElementoCola;
 
-#define MAX_ELEMENTOS 100
 #define ELEMENTO_NULO {.longitud = 0, .latitud = 0}
 
 /*Definicion del tipo Cola*/
 typedef struct
 {
     int ultimo;
-    ElementoCola datos[MAX_ELEMENTOS];
+    int capacidad;
+    ElementoCola *datos;
 }_Cola;
 
 typedef _Cola* Cola;/*Ocultamos al usuario el uso de punteros definiendo el tipo Cola como un puntero a la estructura _Cola*/
 
-Cola crearCola();
+Cola crearCola(int capacidad);
 void mostrarCola(Cola cola);
 bool esColaVacia(Cola cola);
 bool esColaLlena(Cola cola);
@@ -28,10 +28,12 @@ bool encolar(ElementoCola dato, Cola cola);
 ElementoCola decolar(Cola cola);
 void eliminarCola(Cola cola);
 
-Cola crearCola()/*Crea una cola*/
+Cola crearCola(int capacidad)/*Crea una cola*/
 {
     Cola cola = (Cola) malloc(sizeof (_Cola));
     cola -> ultimo = -1;
+    cola -> capacidad = capacidad;
+    cola -> datos = (ElementoCola*) malloc(sizeof(ElementoCola) * capacidad);
     printf("Cola creada con exito.\n");
     return cola;
 }
@@ -67,7 +69,7 @@ bool esColaVacia(Cola cola)/*Comprueba si la cola esta vacia*/
 
 bool esColaLlena(Cola cola)/*Comprueba si la pila esta llena*/
 {
-    if (cola -> ultimo == MAX_ELEMENTOS-1)
+    if (cola -> ultimo == cola -> capacidad - 1)
     {
         return true;
     }
@@ -79,7 +81,7 @@ bool esColaLlena(Cola cola)/*Comprueba si la pila esta llena*/
 
 bool encolar(ElementoCola dato, Cola cola)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
 {
-    if (cola -> ultimo < MAX_ELEMENTOS - 1)
+    if (cola -> ultimo < cola -> capacidad - 1)
     {
         cola -> ultimo++;
         cola -> datos[cola -> ultimo] = dato;
@@ -114,6 +116,8 @@ ElementoCola desencolar(Cola cola)/*Saca al primer elemento que entro y lo devue
 
 void eliminarCola(Cola cola)/*Elimina la cola y libera la memoria*/
 {
+    free(cola->datos);
+    cola -> datos = NULL;
     free(cola);
     cola = NULL;
     printf("Cola eliminada de memoria.\n");

@@ -13,16 +13,22 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "pila.h"
+#include "cola.h"
+
+void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2);
 
 int main()
 {
     int opc;
+    Pila pila1 = crearPila(), pila2 = crearPila();
+    Cola cola1 = crearCola(), cola2 = crearCola();
     do
     {
         printf("==========================================================================\
         \n                                     MENU\
         \n==========================================================================");
-        printf("\n  1. Gestionar pilas y colas.\
+        printf("\n  1.  Gestionar pilas y colas.\
         \n  2.  Mostrar pilas.\
         \n  3.  Intercambiar posiciones pares e impares en pila 1 y pila 2.\
         \n  4.  Eliminar posiciones pares en pila.\
@@ -33,13 +39,15 @@ int main()
         \n  9.  Limpiar colas.\
         \n 10.  Salir");
 
+        printf("----------------------------------------------------------------------------------------------\n");
         printf("\nIntroduzca opcion (1-10): ");
         scanf("%d", &opc);
+        printf("----------------------------------------------------------------------------------------------\n");
 
         switch (opc)
         {
         case 1:
-            /* code */
+            gestionarPilasColas(pila1, pila2, cola1, cola2);
             break;
         case 2:
             /* code */
@@ -80,4 +88,42 @@ int main()
     } while (opc != 10);
 
     return 0;
+}
+
+void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2)
+{
+    int line_count;
+    ElementoPila aux;
+
+    FILE *pfich = fopen("fichnum.csv", "r");
+
+    if (pfich == NULL) {
+        printf("Error al abrir el fichero \"fichnum.csv\"\n");
+    }
+    else
+    {   
+        printf("Leyendo el fichero . . .\n");
+        for (
+            line_count = 0;
+            fscanf(pfich, "%lf;%lf", &aux.longitud, &aux.latitud) == 2;
+            line_count++
+        )
+        {
+            if ((int)aux.longitud % 2 == 0)/*La parte entera de la longitud es par*/
+            {
+                apilar(aux, pila1);
+            }
+            if ((int)aux.latitud % 2 != 0)/*La parte entera de la latitud es impar*/
+            {
+                apilar(aux, pila2);
+            }
+        }
+        if (fclose(pfich) != 0) {
+            printf("Error al cerrar el fichero \"fichnum.csv\"\n");
+        }
+        printf("----------------------------------------------------------------------------------------------\n");
+        printf("Fichero leido con exito\n");
+        printf("----------------------------------------------------------------------------------------------\n");
+    }
+    return;
 }
