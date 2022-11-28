@@ -34,7 +34,7 @@ Cola crearCola(int capacidad)/*Crea una cola*/
     cola -> ultimo = -1;
     cola -> capacidad = capacidad;
     cola -> datos = (ElementoCola*) malloc(sizeof(ElementoCola) * capacidad);
-    printf("Cola creada con exito.\n");
+    //printf("Cola creada con exito.\n");
     return cola;
 }
 
@@ -120,6 +120,6 @@ void eliminarCola(Cola cola)/*Elimina la cola y libera la memoria*/
     cola -> datos = NULL;
     free(cola);
     cola = NULL;
-    printf("Cola eliminada de memoria.\n");
+    //printf("Cola eliminada de memoria.\n");
     return;
 }

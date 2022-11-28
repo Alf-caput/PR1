@@ -34,7 +34,7 @@ Pila crearPila(int capacidad)/*Crea una pila*/
     pila -> cima = -1;
     pila -> capacidad = capacidad;
     pila -> datos = (ElementoPila*) malloc(sizeof(ElementoPila) * capacidad);
-    printf("Pila creada con exito.\n");
+    //printf("Pila creada con exito.\n");
     return pila;
 }
 
@@ -115,6 +115,6 @@ void eliminarPila(Pila pila)/*Elimina la pila y libera la memoria*/
     pila -> datos = NULL;
     free(pila);
     pila = NULL;
-    printf("Pila eliminada de memoria.");
+    //printf("Pila eliminada de memoria.");
     return;
 }

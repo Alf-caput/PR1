@@ -19,6 +19,10 @@
 #define N 100
 
 void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2);
+void mostrarGeoPilas(Pila pila1, Pila pila2);
+void limpiarPilas(Pila pila1, Pila pila2);
+void mostrarGeoColas(Cola cola1, Cola cola2);
+void limpiarColas(Cola cola1, Cola cola2);
 
 int main()
 {
@@ -39,10 +43,10 @@ int main()
         \n  7.  Intercambiar posiciones pares e impares en cola 1 y cola2.\
         \n  8.  Eliminar posiciones pares en cola.\
         \n  9.  Limpiar colas.\
-        \n 10.  Salir");
+        \n 10.  Salir\n");
 
         printf("----------------------------------------------------------------------------------------------\n");
-        printf("\nIntroduzca opcion (1-10): ");
+        printf("Introduzca opcion (1-10): ");
         scanf("%d", &opc);
         printf("----------------------------------------------------------------------------------------------\n");
 
@@ -52,7 +56,7 @@ int main()
             gestionarPilasColas(pila1, pila2, cola1, cola2);
             break;
         case 2:
-            /* code */
+            mostrar(pila1, pila2);
             break;
         case 3:
             /* code */
@@ -61,7 +65,7 @@ int main()
             /* code */
             break;
         case 5:
-            /* code */
+            limpiarPilas(pila1, pila2);
             break;
         case 6:
             /* code */
@@ -95,7 +99,8 @@ int main()
 void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2)
 {
     int line_count;
-    ElementoPila aux;
+    ElementoPila paux;
+    ElementoCola caux;
 
     FILE *pfich = fopen("fichnum.csv", "r");
 
@@ -107,18 +112,27 @@ void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2)
         printf("Leyendo el fichero . . .\n");
         for (
             line_count = 0;
-            fscanf(pfich, "%lf;%lf", &aux.longitud, &aux.latitud) == 2;
+            fscanf(pfich, "%lf;%lf", &paux.longitud, &paux.latitud) == 2;
             line_count++
         )
         {
-            if ((int)aux.longitud % 2 == 0)/*La parte entera de la longitud es par*/
+            if ((int)paux.longitud % 2 == 0 && (int)paux.longitud)/*La parte entera de la longitud es par*/
             {
-                apilar(aux, pila1);
+                apilar(paux, pila1);
             }
-            if ((int)aux.latitud % 2 != 0)/*La parte entera de la latitud es impar*/
+            else/*La parte entera de la longitud es impar o 0*/
             {
-                apilar(aux, pila2);
+                apilar(paux, pila2);
             }
+            if ((int)caux.longitud % 2 == 0 && (int)caux.longitud)/*La parte entera de la longitud es par*/
+            {
+                encolar(caux, cola1);
+            }
+            else/*La parte entera de la longitud es impar o 0*/
+            {
+                encolar(caux, cola2);
+            }
+            
         }
         if (fclose(pfich) != 0) {
             printf("Error al cerrar el fichero \"fichnum.csv\"\n");
@@ -127,5 +141,51 @@ void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2)
         printf("Fichero leido con exito\n");
         printf("----------------------------------------------------------------------------------------------\n");
     }
+    return;
+}
+
+void mostrarGeoPilas(Pila pila1, Pila pila2)
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando pila con geolocalizaciones cuya parte entera de la longitud es par (pila 1)\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    mostrarPila(pila1);
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando pila con geolocalizaciones cuya parte entera de la longitud es impar o cero(pila 2)\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    mostrarPila(pila2);
+    return;
+}
+
+void limpiarPilas(Pila pila1, Pila pila2)
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Eliminando elementos de las pilas\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    eliminarPila(pila1);
+    eliminarPila(pila2);
+    return;
+}
+
+void mostrarGeoColas(Cola cola1, Cola cola2)
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando cola con geolocalizaciones cuya parte entera de la longitud es par (cola 1)\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    mostrarCola(cola1);
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando cola con geolocalizaciones cuya parte entera de la longitud es impar o cero(cola 2)\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    mostrarCola(cola2);
+    return;
+}
+
+void limpiarColas(Cola cola1, Cola cola2)
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Eliminando elementos de las colas\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    eliminarCola(cola1);
+    eliminarCola(cola2);
     return;
 }
