@@ -16,13 +16,15 @@
 #include "pila.h"
 #include "cola.h"
 
+#define N 100
+
 void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2);
 
 int main()
 {
     int opc;
-    Pila pila1 = crearPila(), pila2 = crearPila();
-    Cola cola1 = crearCola(), cola2 = crearCola();
+    Pila pila1 = crearPila(N), pila2 = crearPila(N);
+    Cola cola1 = crearCola(N), cola2 = crearCola(N);
     do
     {
         printf("==========================================================================\
