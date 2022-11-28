@@ -13,9 +13,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "geo_conjunto.h"
+#include "conjunto.h"
 
-void leerFichero(Conjunto *p_conjunto1, Conjunto *p_conjunto2);
+#define N 100
+
+void leerFichero(Conjunto conjunto1, Conjunto conjunto2);
 void mostrar(Conjunto conjunto1, Conjunto conjunto2);
 void unir(Conjunto conjunto1, Conjunto conjunto2);
 void intersectar(Conjunto conjunto1, Conjunto conjunto2);
@@ -24,12 +26,12 @@ void obtenerCardinales(Conjunto conjunto1, Conjunto conjunto2);
 int main()
 {
     int opc;
-    Conjunto conjunto1 = conjuntoVacio(), conjunto2 = conjuntoVacio();
+    Conjunto conjunto1 = crearConjunto(N), conjunto2 = crearConjunto(N);
     do
     {
-        printf("==========================================================================\
+        printf("==============================================================================================\
         \n                                     MENU\
-        \n==========================================================================");
+        \n==============================================================================================");
         printf("\n  1.  Leer fichero.\
         \n  2.  Mostrar conjuntos 1, 2.\
         \n  3.  Unir conjuntos 1, 2.\
@@ -44,7 +46,7 @@ int main()
         switch (opc)
         {
         case 1:
-            leerFichero(&conjunto1, &conjunto2);
+            leerFichero(conjunto1, conjunto2);
             break;
         case 2:
             mostrar(conjunto1, conjunto2);
@@ -60,6 +62,8 @@ int main()
             break;
         case 6:
             printf("Saliendo del programa . . .\n");
+            eliminarConjunto(conjunto1);
+            eliminarConjunto(conjunto2);
             break;
         default:
             printf("Opcion no reconocida, por favor repita la operacion.\n");
@@ -74,10 +78,10 @@ int main()
     return 0;
 }
 
-void leerFichero(Conjunto *p_conjunto1, Conjunto *p_conjunto2)
+void leerFichero(Conjunto conjunto1, Conjunto conjunto2)
 {
     int line_count;
-    GeoLocalizacion aux;
+    ElementoConjunto aux;
 
     FILE *pfich = fopen("fichnum.csv", "r");
 
@@ -95,11 +99,11 @@ void leerFichero(Conjunto *p_conjunto1, Conjunto *p_conjunto2)
         {
             if ((int)aux.longitud % 2 == 0)/*La parte entera de la longitud es par*/
             {
-                aniadir(aux, p_conjunto1);
+                aniadirAlConjunto(aux, conjunto1);
             }
             if ((int)aux.latitud % 2 != 0)/*La parte entera de la latitud es impar*/
             {
-                aniadir(aux, p_conjunto2);
+                aniadirAlConjunto(aux, conjunto2);
             }
         }
         if (fclose(pfich) != 0) {
@@ -117,11 +121,11 @@ void mostrar(Conjunto conjunto1, Conjunto conjunto2)
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto con geolocalizaciones cuya parte entera de la longitud es par (conjunto 1)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrarConjunto(conjunto1);
+    mostrarPagConjunto(conjunto1, 20);
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto con geolocalizaciones cuya parte entera de la latitud es impar (conjunto 2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrarConjunto(conjunto2);
+    mostrarPagConjunto(conjunto2, 20);
     return;
 }
 
@@ -131,7 +135,8 @@ void unir(Conjunto conjunto1, Conjunto conjunto2)
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto union (conjunto1 + conjunto2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrarConjunto(geo_union);
+    mostrarPagConjunto(geo_union, 20);
+    eliminarConjunto(geo_union);
     return;
 }
 
@@ -141,7 +146,8 @@ void intersectar(Conjunto conjunto1, Conjunto conjunto2)
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando conjunto interseccion (conjunto1 ^ conjunto2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    mostrarConjunto(geo_interseccion);
+    mostrarPagConjunto(geo_interseccion, 20);
+    eliminarConjunto(geo_interseccion);
     return;
 }
 
@@ -150,6 +156,6 @@ void obtenerCardinales(Conjunto conjunto1, Conjunto conjunto2)
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Mostrando cardinales(conjunto1, conjunto2)\n");
     printf("----------------------------------------------------------------------------------------------\n"); 
-    printf("Cardinal conjunto1 = %d, Cardinal conjunto2 = %d\n",cardinal(conjunto1), cardinal(conjunto2));
+    printf("Cardinal conjunto1 = %d, Cardinal conjunto2 = %d\n",cardinalConjunto(conjunto1), cardinalConjunto(conjunto2));
     return;
 }
