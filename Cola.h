@@ -26,6 +26,7 @@ bool esColaVacia(Cola cola);
 bool esColaLlena(Cola cola);
 bool encolar(ElementoCola dato, Cola cola);
 ElementoCola desencolar(Cola cola);
+int longitudCola(Cola cola);
 void vaciarCola(Cola cola);
 void eliminarCola(Cola cola);
 
@@ -113,6 +114,11 @@ ElementoCola desencolar(Cola cola)/*Saca al primer elemento que entro y lo devue
         cola -> ultimo--;
     }
     return dato;
+}
+
+int longitudCola(Cola cola)
+{
+    return cola -> ultimo + 1;
 }
 
 void vaciarCola(Cola cola)
