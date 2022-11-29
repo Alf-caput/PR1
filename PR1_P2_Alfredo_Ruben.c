@@ -124,14 +124,14 @@ void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2)
             {
                 apilar(paux, pila2);
             }
-            if ((int)caux.longitud % 2 == 0 && (int)caux.longitud)/*La parte entera de la longitud es par*/
-            {
-                encolar(caux, cola1);
-            }
-            else/*La parte entera de la longitud es impar o 0*/
-            {
-                encolar(caux, cola2);
-            }
+            // if ((int)caux.longitud % 2 == 0 && (int)caux.longitud)/*La parte entera de la longitud es par*/
+            // {
+            //     encolar(caux, cola1);
+            // }
+            // else/*La parte entera de la longitud es impar o 0*/
+            // {
+            //     encolar(caux, cola2);
+            // }
             
         }
         if (fclose(pfich) != 0) {
