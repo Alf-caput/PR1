@@ -81,7 +81,7 @@ bool esColaLlena(Cola cola)/*Comprueba si la pila esta llena*/
 
 bool encolar(ElementoCola dato, Cola cola)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
 {
-    if (cola -> ultimo < cola -> capacidad - 1)
+    if (!esColaLlena(cola))
     {
         cola -> ultimo++;
         cola -> datos[cola -> ultimo] = dato;

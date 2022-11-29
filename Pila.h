@@ -81,7 +81,7 @@ bool esPilaLlena(Pila pila)/*Comprueba si la pila esta llena*/
 
 bool apilar(ElementoPila dato, Pila pila)/*Apila un elemento y devuelve 1 si fue posible y 0 si no fue posible*/
 {
-    if (pila -> cima < pila -> capacidad - 1)
+    if (!esPilaLlena(pila))
     {
         pila -> cima++;
         pila -> datos[pila -> cima] = dato;
@@ -107,6 +107,17 @@ ElementoPila desapilar(Pila pila)/*Desapila un elemento y lo devuelve*/
         pila -> cima--;
     }
     return dato;
+}
+
+void vaciarPila(Pila pila)
+{
+    int i;
+    for (i = 0; i <= pila -> cima; i++)
+    {
+        desapilar(pila);
+    }
+    printf("Pila vaciada con exito.\n");
+    return;
 }
 
 void eliminarPila(Pila pila)/*Elimina la pila y libera la memoria*/
