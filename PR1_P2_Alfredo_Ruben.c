@@ -20,7 +20,8 @@
 
 void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2);
 void mostrarGeoPilas(Pila pila1, Pila pila2);
-void intercambiarPilasPosParImpar(Pila pila);
+void intercambiarPilaPosParImpar(Pila pila);
+void eliminarPilaPosPares(Pila pila);
 void limpiarPilas(Pila pila1, Pila pila2);
 void mostrarGeoColas(Cola cola1, Cola cola2);
 void limpiarColas(Cola cola1, Cola cola2);
@@ -64,7 +65,8 @@ int main()
             intercambiarPilaPosParImpar(pila2);
             break;
         case 4:
-            /* code */
+            eliminarPilaPosPares(pila1);
+            eliminarPilaPosPares(pila2);
             break;
         case 5:
             limpiarPilas(pila1, pila2);
@@ -118,6 +120,8 @@ void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2)
             line_count++
         )
         {
+            caux.longitud = paux.longitud;
+            caux.latitud = paux.latitud;
             if ((int)paux.longitud % 2 == 0 && (int)paux.longitud)/*La parte entera de la longitud es par*/
             {
                 apilar(paux, pila1);
@@ -126,14 +130,14 @@ void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2)
             {
                 apilar(paux, pila2);
             }
-            // if ((int)caux.longitud % 2 == 0 && (int)caux.longitud)/*La parte entera de la longitud es par*/
-            // {
-            //     encolar(caux, cola1);
-            // }
-            // else/*La parte entera de la longitud es impar o 0*/
-            // {
-            //     encolar(caux, cola2);
-            // }
+            if ((int)caux.longitud % 2 == 0 && (int)caux.longitud)/*La parte entera de la longitud es par*/
+            {
+                encolar(caux, cola1);
+            }
+            else/*La parte entera de la longitud es impar o 0*/
+            {
+                encolar(caux, cola2);
+            }
             
         }
         if (fclose(pfich) != 0) {
@@ -159,44 +163,11 @@ void mostrarGeoPilas(Pila pila1, Pila pila2)
     return;
 }
 
-void limpiarPilas(Pila pila1, Pila pila2)
-{
-    printf("----------------------------------------------------------------------------------------------\n");
-    printf("Borrando elementos de las pilas\n");
-    printf("----------------------------------------------------------------------------------------------\n");
-    vaciarPila(pila1);
-    vaciarPila(pila2);
-    return;
-}
-
-void mostrarGeoColas(Cola cola1, Cola cola2)
-{
-    printf("----------------------------------------------------------------------------------------------\n");
-    printf("Mostrando cola con geolocalizaciones cuya parte entera de la longitud es par (cola 1)\n");
-    printf("----------------------------------------------------------------------------------------------\n");
-    mostrarCola(cola1);
-    printf("----------------------------------------------------------------------------------------------\n");
-    printf("Mostrando cola con geolocalizaciones cuya parte entera de la longitud es impar o cero (cola 2)\n");
-    printf("----------------------------------------------------------------------------------------------\n");
-    mostrarCola(cola2);
-    return;
-}
-
-void limpiarColas(Cola cola1, Cola cola2)
-{
-    printf("----------------------------------------------------------------------------------------------\n");
-    printf("Borrando elementos de las colas\n");
-    printf("----------------------------------------------------------------------------------------------\n");
-    vaciarCola(cola1);
-    vaciarCola(cola2);
-    return;
-}
-
 void intercambiarPilaPosParImpar(Pila pila)
 {
     int i;
-    Pila pares = crearPila(longitudPila(pila) / 2);
-    Pila impares = crearPila(longitudPila(pila) / 2 + (longitudPila(pila) % 2));/*Sumamos uno si la pila a reordenar tiene longitud impar*/
+    Pila pares = crearPila(longitudPila(pila) / 2 + (longitudPila(pila) % 2));/*Sumamos uno si la pila a reordenar tiene longitud impar*/
+    Pila impares = crearPila(longitudPila(pila) / 2);
     ElementoPila aux;
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Reordenando pila . . .\n");
@@ -230,5 +201,66 @@ void intercambiarPilaPosParImpar(Pila pila)
     printf("----------------------------------------------------------------------------------------------\n");
     printf("Pila reordenada con exito\n");
     printf("----------------------------------------------------------------------------------------------\n");
+    return;
+}
+
+void eliminarPilaPosPares(Pila pila)
+{
+    int i;
+    Pila pares = crearPila(longitudPila(pila) / 2 + longitudPila(pila) % 2);
+    ElementoPila aux;
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Eliminando posiciones pares de la pila. . .\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    for (i = longitudPila(pila); !esPilaVacia(pila); i++)
+    {
+        aux = desapilar(pila);
+        if (i % 2 == 0)
+        {
+            apilar(aux, pares);
+        }
+    }
+    while (!esPilaVacia(pares))
+    {
+        aux = desapilar(pares);
+        apilar(aux, pila);
+    }
+    eliminarPila(pares);
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Elementos eliminados con exito.\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    return;
+}
+
+void limpiarPilas(Pila pila1, Pila pila2)
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Borrando elementos de las pilas\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    vaciarPila(pila1);
+    vaciarPila(pila2);
+    return;
+}
+
+void mostrarGeoColas(Cola cola1, Cola cola2)
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando cola con geolocalizaciones cuya parte entera de la longitud es par (cola 1)\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    mostrarCola(cola1);
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando cola con geolocalizaciones cuya parte entera de la longitud es impar o cero (cola 2)\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    mostrarCola(cola2);
+    return;
+}
+
+void limpiarColas(Cola cola1, Cola cola2)
+{
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Borrando elementos de las colas\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    vaciarCola(cola1);
+    vaciarCola(cola2);
     return;
 }
