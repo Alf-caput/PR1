@@ -25,7 +25,8 @@ void mostrarCola(Cola cola);
 bool esColaVacia(Cola cola);
 bool esColaLlena(Cola cola);
 bool encolar(ElementoCola dato, Cola cola);
-ElementoCola decolar(Cola cola);
+ElementoCola desencolar(Cola cola);
+void vaciarCola(Cola cola);
 void eliminarCola(Cola cola);
 
 Cola crearCola(int capacidad)/*Crea una cola*/
@@ -112,6 +113,24 @@ ElementoCola desencolar(Cola cola)/*Saca al primer elemento que entro y lo devue
         cola -> ultimo--;
     }
     return dato;
+}
+
+void vaciarCola(Cola cola)
+{
+    int i;
+    if (!esColaVacia(cola))
+    {
+        for (i = 0; i <= cola -> ultimo; i++)
+        {
+            desencolar(cola);
+        }
+        printf("Cola vaciada con exito.\n");
+    }
+    else
+    {
+        printf("La cola ya estaba vacia.");
+    }
+    return;
 }
 
 void eliminarCola(Cola cola)/*Elimina la cola y libera la memoria*/

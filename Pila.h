@@ -26,7 +26,9 @@ bool esPilaVacia(Pila pila);
 bool esPilaLlena(Pila pila);
 bool apilar(ElementoPila dato, Pila pila);
 ElementoPila desapilar(Pila pila);
+void vaciarPila(Pila pila);
 void eliminarPila(Pila pila);
+
 
 Pila crearPila(int capacidad)/*Crea una pila*/
 {
@@ -112,11 +114,18 @@ ElementoPila desapilar(Pila pila)/*Desapila un elemento y lo devuelve*/
 void vaciarPila(Pila pila)
 {
     int i;
-    for (i = 0; i <= pila -> cima; i++)
+    if (!esPilaVacia(pila))
     {
-        desapilar(pila);
+        for (i = 0; i <= pila -> cima; i++)
+        {
+            desapilar(pila);
+        }
+        printf("Pila vaciada con exito.\n");
     }
-    printf("Pila vaciada con exito.\n");
+    else
+    {
+        printf("La pila ya estaba vacia.");
+    }
     return;
 }
 
