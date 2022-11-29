@@ -56,7 +56,7 @@ int main()
             gestionarPilasColas(pila1, pila2, cola1, cola2);
             break;
         case 2:
-            mostrar(pila1, pila2);
+            mostrarGeoPilas(pila1, pila2);
             break;
         case 3:
             /* code */
@@ -68,7 +68,7 @@ int main()
             limpiarPilas(pila1, pila2);
             break;
         case 6:
-            /* code */
+            mostrarGeoColas(cola1, cola2);
             break;
         case 7:
             /* code */
@@ -77,7 +77,7 @@ int main()
             /* code */
             break;
         case 9:
-            /* code */
+            limpiarColas(cola1, cola2);
             break;
         case 10:
             printf("\nSaliendo del programa . . .");
@@ -151,7 +151,7 @@ void mostrarGeoPilas(Pila pila1, Pila pila2)
     printf("----------------------------------------------------------------------------------------------\n");
     mostrarPila(pila1);
     printf("----------------------------------------------------------------------------------------------\n");
-    printf("Mostrando pila con geolocalizaciones cuya parte entera de la longitud es impar o cero(pila 2)\n");
+    printf("Mostrando pila con geolocalizaciones cuya parte entera de la longitud es impar o cero (pila 2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
     mostrarPila(pila2);
     return;
@@ -160,10 +160,10 @@ void mostrarGeoPilas(Pila pila1, Pila pila2)
 void limpiarPilas(Pila pila1, Pila pila2)
 {
     printf("----------------------------------------------------------------------------------------------\n");
-    printf("Eliminando elementos de las pilas\n");
+    printf("Borrando elementos de las pilas\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    eliminarPila(pila1);
-    eliminarPila(pila2);
+    vaciarPila(pila1);
+    vaciarPila(pila2);
     return;
 }
 
@@ -174,7 +174,7 @@ void mostrarGeoColas(Cola cola1, Cola cola2)
     printf("----------------------------------------------------------------------------------------------\n");
     mostrarCola(cola1);
     printf("----------------------------------------------------------------------------------------------\n");
-    printf("Mostrando cola con geolocalizaciones cuya parte entera de la longitud es impar o cero(cola 2)\n");
+    printf("Mostrando cola con geolocalizaciones cuya parte entera de la longitud es impar o cero (cola 2)\n");
     printf("----------------------------------------------------------------------------------------------\n");
     mostrarCola(cola2);
     return;
@@ -183,9 +183,9 @@ void mostrarGeoColas(Cola cola1, Cola cola2)
 void limpiarColas(Cola cola1, Cola cola2)
 {
     printf("----------------------------------------------------------------------------------------------\n");
-    printf("Eliminando elementos de las colas\n");
+    printf("Borrando elementos de las colas\n");
     printf("----------------------------------------------------------------------------------------------\n");
-    eliminarCola(cola1);
-    eliminarCola(cola2);
+    vaciarCola(cola1);
+    vaciarCola(cola2);
     return;
 }

@@ -120,7 +120,7 @@ void vaciarCola(Cola cola)
     int i;
     if (!esColaVacia(cola))
     {
-        for (i = 0; i <= cola -> ultimo; i++)
+        while (!esColaVacia(cola))
         {
             desencolar(cola);
         }

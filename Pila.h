@@ -113,10 +113,9 @@ ElementoPila desapilar(Pila pila)/*Desapila un elemento y lo devuelve*/
 
 void vaciarPila(Pila pila)
 {
-    int i;
     if (!esPilaVacia(pila))
     {
-        for (i = 0; i <= pila -> cima; i++)
+        while (!esPilaVacia(pila))
         {
             desapilar(pila);
         }
