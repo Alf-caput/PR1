@@ -26,6 +26,7 @@ bool esPilaVacia(Pila pila);
 bool esPilaLlena(Pila pila);
 bool apilar(ElementoPila dato, Pila pila);
 ElementoPila desapilar(Pila pila);
+int longitudPila(Pila pila);
 void vaciarPila(Pila pila);
 void eliminarPila(Pila pila);
 
@@ -109,6 +110,11 @@ ElementoPila desapilar(Pila pila)/*Desapila un elemento y lo devuelve*/
         pila -> cima--;
     }
     return dato;
+}
+
+int longitudPila(Pila pila)
+{
+    return pila -> cima + 1;
 }
 
 void vaciarPila(Pila pila)

@@ -20,6 +20,7 @@
 
 void gestionarPilasColas(Pila pila1, Pila pila2, Cola cola1, Cola cola2);
 void mostrarGeoPilas(Pila pila1, Pila pila2);
+void intercambiarPilasPosParImpar(Pila pila);
 void limpiarPilas(Pila pila1, Pila pila2);
 void mostrarGeoColas(Cola cola1, Cola cola2);
 void limpiarColas(Cola cola1, Cola cola2);
@@ -59,7 +60,8 @@ int main()
             mostrarGeoPilas(pila1, pila2);
             break;
         case 3:
-            /* code */
+            intercambiarPilaPosParImpar(pila1);
+            intercambiarPilaPosParImpar(pila2);
             break;
         case 4:
             /* code */
@@ -187,5 +189,46 @@ void limpiarColas(Cola cola1, Cola cola2)
     printf("----------------------------------------------------------------------------------------------\n");
     vaciarCola(cola1);
     vaciarCola(cola2);
+    return;
+}
+
+void intercambiarPilaPosParImpar(Pila pila)
+{
+    int i;
+    Pila pares = crearPila(longitudPila(pila) / 2);
+    Pila impares = crearPila(longitudPila(pila) / 2 + (longitudPila(pila) % 2));/*Sumamos uno si la pila a reordenar tiene longitud impar*/
+    ElementoPila aux;
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Reordenando pila . . .\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+    for (i = longitudPila(pila); !esPilaVacia(pila); i++)
+    {
+        aux = desapilar(pila);
+        if (i % 2 == 0)
+        {
+            apilar(aux, pares);
+        }
+        else
+        {
+            apilar(aux, impares);
+        }
+    }
+    for (i = 0; !esPilaVacia(impares); i++)
+    {
+        if (i % 2 == 0)
+        {
+            aux = desapilar(pares);
+        }
+        else
+        {
+            aux = desapilar(impares);
+        }
+        apilar(aux, pila);
+    }
+    eliminarPila(pares);
+    eliminarPila(impares);
+    printf("----------------------------------------------------------------------------------------------\n");
+    printf("Pila reordenada con exito\n");
+    printf("----------------------------------------------------------------------------------------------\n");
     return;
 }
