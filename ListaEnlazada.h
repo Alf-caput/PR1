@@ -7,10 +7,10 @@ typedef struct
 	double latitud;
 }ElementoLista;
 
-typedef struct
+typedef struct _Nodo
 {
 	ElementoLista dato;
-	_Nodo* sig;
+	struct _Nodo* sig;
 }_Nodo;
 
 typedef _Nodo* Nodo;
@@ -22,11 +22,13 @@ typedef struct
 
 typedef _Lista* Lista;
 
-Nodo crearNodo(ElementoLista dato);
+Nodo _crearNodo(ElementoLista dato);
 Lista crearLista();
 void mostrarLista(Lista lista);
+void insertarAlFinal(ElementoLista dato, Lista lista);
+// void eliminarElemento(ElementoLista dato, Lista lista);
 
-Nodo crearNodo(ElementoLista dato)
+Nodo _crearNodo(ElementoLista dato)
 {
 	Nodo nuevoNodo = (Nodo) malloc(sizeof(_Nodo));
 	if (!nuevoNodo)
@@ -57,23 +59,27 @@ void mostrarLista(Lista lista)
 	{
 		printf("No habia elementos en la lista.\n");
 	}
-	for(
-		actual = lista -> cabeza, i = 0;
-		actual != NULL;
-		actual = actual -> sig, i++
-		)
+	else
 	{
-		printf("geo[%d]: longitud=%lf, latitud=%lf\n", i, actual->dato.longitud, actual->dato.longitud);
+		for(
+			actual = lista -> cabeza, i = 0;
+			actual != NULL;
+			actual = actual -> sig, i++
+			)
+		{
+			printf("geo[%d]: longitud=%lf, latitud=%lf -> \n", i, actual->dato.longitud, actual->dato.longitud);
+		}
+		printf("NULL");
 	}
 	return;
 }
-/*
-void insertarElemento(ElementoLista dato, Lista lista)
+
+void insertarAlFinal(ElementoLista dato, Lista lista)
 {
 	Nodo actual = lista -> cabeza;
 	if(actual == NULL)
 	{
-		lista -> cabeza = crearNodo(elemento);
+		lista -> cabeza = _crearNodo(dato);
 	}
 	else 
 	{
@@ -81,27 +87,28 @@ void insertarElemento(ElementoLista dato, Lista lista)
 		{
       		actual = actual -> sig;
     	}
-		actual -> sig = crearNodo(elemento);
+		actual -> sig = _crearNodo(dato);
 	}
 	return;
 }
 
-void eliminarElemento(ElementoLista elemento, Lista* lista)
+void eliminarElemento(ElementoLista dato, Lista lista)
 {
-	Nodo* actual = lista -> cabeza;            
-	Nodo* ant = actual;           
-	while(actual != NULL)
+	int i;
+	Nodo actual;
+	Nodo anterior;
+	for (
+		actual = lista -> cabeza;
+		actual != NULL;
+		anterior = anterior -> sig)
 	{
-		if(actual -> elemento == elemento)
-		{      
-			ant -> sig = actual -> sig;
-      		if(actual == lista -> cabeza)
-        		lista -> cabeza = actual -> sig;
-      		free(actual);
-      		return;
+		if (actual -> dato.longitud == dato.longitud &&
+			actual -> dato.latitud == dato.latitud)
+		{
+			anterior -> sig = actual -> sig;
+			free(actual);
 		}
-    	ant = actual;             
-    	actual = actual -> sig;        
-  	}                                 
+		actual = actual -> sig;
+	}
+	return;                             
 }                 
-*/
