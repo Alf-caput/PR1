@@ -21,7 +21,7 @@ struct lista
 {
 	Nodo* cabeza;
 };
-
+/*Ruben haz que las funciones devuelvan Nodo pero que no se sepan que es un puntero*/
 Nodo *crearNodo(ElementoLista elemento)
 {
 	Nodo* nuevoNodo = malloc(sizeof(Nodo));
