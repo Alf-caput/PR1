@@ -27,7 +27,7 @@ Lista crearLista();
 void mostrarLista(Lista lista);
 void insertarAlFinal(ElementoLista dato, Lista lista);
 void insertarPosicionElemento(ElementoLista dato, Lista lista,int pos);
-void eliminarLista(Lista lista)
+void eliminarLista(Lista lista);
 // void eliminarElemento(ElementoLista dato, Lista lista);
 
 Nodo _crearNodo(ElementoLista dato)
