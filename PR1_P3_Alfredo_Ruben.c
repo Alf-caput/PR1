@@ -113,7 +113,7 @@ void introducirGeoLocalizacion(Lista lista)
 	}
 	else
 	{
-		/* code */
+		printf("Introduciendo geolocalizacion . . .\n");
 	}
 	return;
 }
