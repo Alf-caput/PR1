@@ -52,6 +52,7 @@ int main()
 				break;
 			case 4:
 				printf("Saliendo del programa...\n");
+				eliminarLista(lista);
 				break;
 			default:
 				printf("Opcion no reconocida, repita la operacion.\n");
@@ -113,6 +114,6 @@ void eliminarGeoLocalizacion(Lista lista)
 	ElementoLista aux;
 	printf("Introduzca la longitud y la latitud de la coordenada que desea eliminar (longitud;latitud): ");
 	scanf("%lf;%lf", &aux.longitud, &aux.latitud);
-	eliminarElemento(aux, lista);
+	borrarElemento(aux, lista);
 	return;
 }

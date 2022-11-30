@@ -26,7 +26,8 @@ Nodo _crearNodo(ElementoLista dato);
 Lista crearLista();
 void mostrarLista(Lista lista);
 void insertarAlFinal(ElementoLista dato, Lista lista);
-void eliminarElemento(ElementoLista dato, Lista lista);
+void borrarElemento(ElementoLista dato, Lista lista);
+void eliminarLista(Lista lista);
 
 Nodo _crearNodo(ElementoLista dato)
 {
@@ -92,7 +93,7 @@ void insertarAlFinal(ElementoLista dato, Lista lista)
 	return;
 }
 
-void eliminarElemento(ElementoLista dato, Lista lista)
+void borrarElemento(ElementoLista dato, Lista lista)
 {
 	Nodo temp;
 	if (
@@ -121,3 +122,15 @@ void eliminarElemento(ElementoLista dato, Lista lista)
 	}
 	return;
 }  
+
+void eliminarLista(Lista lista)
+{
+	Nodo aux;
+	while (lista -> cabeza != NULL)
+	{
+		aux = lista -> cabeza;
+		lista -> cabeza = lista -> cabeza -> sig;
+		free(aux);
+		aux = NULL;
+	}
+}        
