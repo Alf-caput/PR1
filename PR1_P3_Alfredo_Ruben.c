@@ -51,7 +51,7 @@ int main()
 				mostrar(lista);
 				break;
 			case 4:
-				printf("Saliendo del programa...\n");
+				printf("Saliendo del programa . . .\n");
 				eliminarLista(lista);
 				break;
 			default:
@@ -104,8 +104,11 @@ void mostrar(Lista lista)
 void introducirGeoLocalizacion(Lista lista)
 {
 	ElementoLista aux;
+	int pos;
 	printf("Introduzca la longitud y la latitud de la coordenada que desea introducir (longitud;latitud): ");
 	scanf("%lf;%lf", &aux.longitud, &aux.latitud);
+	printf("Introduzca la posicion en la que desea introducir la geolocalizacion anterior: ");
+	scanf("%d", &pos);
 	if (estaEnLista(aux, lista))
 	{
 		printf("La geolocalizacion ya estaba en la lista.\n");
@@ -114,6 +117,7 @@ void introducirGeoLocalizacion(Lista lista)
 	else
 	{
 		printf("Introduciendo geolocalizacion . . .\n");
+		insertarEnPos(aux, pos, lista);
 	}
 	return;
 }
