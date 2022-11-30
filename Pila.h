@@ -112,7 +112,7 @@ ElementoPila desapilar(Pila pila)/*Desapila un elemento y lo devuelve*/
     return dato;
 }
 
-int longitudPila(Pila pila)
+int longitudPila(Pila pila)/*Devuelve la longitud de la pila*/
 {
     return pila -> cima + 1;
 }

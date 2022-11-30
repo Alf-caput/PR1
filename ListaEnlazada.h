@@ -32,7 +32,7 @@ bool estaEnLista(ElementoLista dato, Lista lista);
 void borrarElemento(ElementoLista dato, Lista lista);
 void eliminarLista(Lista lista);
 
-Nodo _crearNodo(ElementoLista dato)
+Nodo _crearNodo(ElementoLista dato)/*Crea un nodo*/
 {
 	Nodo nuevoNodo = (Nodo) malloc(sizeof(_Nodo));
 	if (!nuevoNodo)
@@ -44,7 +44,7 @@ Nodo _crearNodo(ElementoLista dato)
 	return nuevoNodo;
 }
 
-Lista crearLista()
+Lista crearLista()/*Crea una lista vacia*/
 {
 	Lista lista = (Lista) malloc(sizeof(_Lista));
 	if (!lista) 
@@ -55,7 +55,7 @@ Lista crearLista()
 	return lista;
 }
 
-void mostrarLista(Lista lista)
+void mostrarLista(Lista lista)/*Muestra la lista*/
 {
 	int i;
 	Nodo actual;
@@ -78,7 +78,7 @@ void mostrarLista(Lista lista)
 	return;
 }
 
-void insertarAlFinal(ElementoLista dato, Lista lista)
+void insertarAlFinal(ElementoLista dato, Lista lista)/*Inserta un elemento al final de la lista*/
 {
 	Nodo actual = lista -> cabeza;
 	if(actual == NULL)
@@ -96,7 +96,7 @@ void insertarAlFinal(ElementoLista dato, Lista lista)
 	return;
 }
 
-void insertarEnPos(ElementoLista dato, int pos, Lista lista)
+void insertarEnPos(ElementoLista dato, int pos, Lista lista)/*Inserta un elemento en la posicion introducida por el ususario*/
 {
 	int i = 0;
 	Nodo actual = lista -> cabeza;
@@ -121,7 +121,7 @@ void insertarEnPos(ElementoLista dato, int pos, Lista lista)
 	return;
 }
 
-void borrarElemento(ElementoLista dato, Lista lista)
+void borrarElemento(ElementoLista dato, Lista lista)/*Borra un elemento de la lista*/
 {
 	Nodo temp;
 	if (
@@ -151,7 +151,7 @@ void borrarElemento(ElementoLista dato, Lista lista)
 	return;
 }  
 
-bool estaEnLista(ElementoLista dato, Lista lista)
+bool estaEnLista(ElementoLista dato, Lista lista)/*Devuelve true si el elemento estaba en la lista sino devuelve false*/
 {
 	Nodo aux = lista -> cabeza;
 	while (aux != NULL)
@@ -166,7 +166,7 @@ bool estaEnLista(ElementoLista dato, Lista lista)
 	return false;
 }
 
-void eliminarLista(Lista lista)
+void eliminarLista(Lista lista)/*Elimina la lista de memoria*/
 {
 	Nodo aux;
 	while (lista -> cabeza != NULL)

@@ -41,7 +41,7 @@ Conjunto crearConjunto(int capacidad)
     return conjunto;
 }
 
-void mostrarConjunto(Conjunto conjunto)
+void mostrarConjunto(Conjunto conjunto)/*Muestra el conjunto*/
 {
     int i;
     ElementoConjunto elemento;
@@ -59,7 +59,7 @@ void mostrarConjunto(Conjunto conjunto)
     return;
 }
 
-void mostrarPagConjunto(Conjunto conjunto, int num_datos_pag)
+void mostrarPagConjunto(Conjunto conjunto, int num_datos_pag)/*Muestra el conjunto por paginas*/
 {
     int i, opc;
     ElementoConjunto elemento;
@@ -99,7 +99,7 @@ void mostrarPagConjunto(Conjunto conjunto, int num_datos_pag)
     return;
 }
 
-bool esConjuntoVacio(Conjunto conjunto) 
+bool esConjuntoVacio(Conjunto conjunto) /*Devuelve true si esta vacio sino devuelve false*/
 {
     if (conjunto -> ultimo == -1)
     {
@@ -111,7 +111,7 @@ bool esConjuntoVacio(Conjunto conjunto)
     }
 }
 
-bool esConjuntoLleno(Conjunto conjunto)
+bool esConjuntoLleno(Conjunto conjunto)/*Devuelve true si esta lleno sino devuelve false*/
 {
     if (conjunto -> ultimo == conjunto -> capacidad - 1)
     {
@@ -123,7 +123,8 @@ bool esConjuntoLleno(Conjunto conjunto)
     }
 }
 
-bool aniadirAlConjunto(ElementoConjunto dato, Conjunto conjunto){
+bool aniadirAlConjunto(ElementoConjunto dato, Conjunto conjunto)/*Aniade un elemento al conjunto devuelve true si pudo sino devuelve false*/
+{
     if (!estaEnConjunto(dato, conjunto)) 
     {
         if (!esConjuntoLleno(conjunto)) 
@@ -143,7 +144,7 @@ bool aniadirAlConjunto(ElementoConjunto dato, Conjunto conjunto){
     }
 }
 
-bool estaEnConjunto(ElementoConjunto dato, Conjunto conjunto)
+bool estaEnConjunto(ElementoConjunto dato, Conjunto conjunto)/*Devuelve true si el elemento esta en el conjunto*/
 {
     bool encontrado = false;
     int i = 0;
@@ -156,12 +157,12 @@ bool estaEnConjunto(ElementoConjunto dato, Conjunto conjunto)
     return encontrado;
 }
 
-int cardinalConjunto(Conjunto conjunto)
+int cardinalConjunto(Conjunto conjunto)/*Devuelve el numero de elementos del conjunto*/
 {
     return conjunto -> ultimo + 1;
 }
 
-bool quitarDelConjunto(ElementoConjunto dato, Conjunto conjunto)
+bool quitarDelConjunto(ElementoConjunto dato, Conjunto conjunto)/*Borra un elemento del conjunto*/
 {
     if (estaEnConjunto(dato, conjunto))
     {
@@ -176,7 +177,7 @@ bool quitarDelConjunto(ElementoConjunto dato, Conjunto conjunto)
 }
 
 
-Conjunto unirConjuntos(Conjunto conjunto1, Conjunto conjunto2)
+Conjunto unirConjuntos(Conjunto conjunto1, Conjunto conjunto2)/*Devuelve el conjunto union*/
 {
     Conjunto union_conjuntos = copiaConjunto(conjunto1);
     int i;
@@ -190,7 +191,7 @@ Conjunto unirConjuntos(Conjunto conjunto1, Conjunto conjunto2)
     return union_conjuntos;
 }
 
-Conjunto intersectarConjuntos(Conjunto conjunto1, Conjunto conjunto2)
+Conjunto intersectarConjuntos(Conjunto conjunto1, Conjunto conjunto2)/*Devuelve el conjunto interseccion*/
 {
     Conjunto interseccion_conjuntos = crearConjunto(conjunto1 -> capacidad);
     int i;
@@ -204,7 +205,7 @@ Conjunto intersectarConjuntos(Conjunto conjunto1, Conjunto conjunto2)
     return interseccion_conjuntos;
 }
 
-Conjunto copiaConjunto(Conjunto conjunto)
+Conjunto copiaConjunto(Conjunto conjunto)/*Devuelve una copia del conjunto*/
 {
     Conjunto copia = crearConjunto(conjunto -> capacidad);
     int i;
@@ -215,7 +216,7 @@ Conjunto copiaConjunto(Conjunto conjunto)
     return copia;
 }
 
-void eliminarConjunto(Conjunto conjunto)
+void eliminarConjunto(Conjunto conjunto)/*Elimina el conjunto de memoria*/
 {
     free(conjunto -> datos);
     conjunto -> datos = NULL;

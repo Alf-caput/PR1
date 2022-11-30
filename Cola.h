@@ -116,12 +116,12 @@ ElementoCola desencolar(Cola cola)/*Saca al primer elemento que entro y lo devue
     return dato;
 }
 
-int longitudCola(Cola cola)
+int longitudCola(Cola cola)/*Devuelve la longitud de la cola*/
 {
     return cola -> ultimo + 1;
 }
 
-void vaciarCola(Cola cola)
+void vaciarCola(Cola cola)/*Borra los elementos de la cola*/
 {
     int i;
     if (!esColaVacia(cola))
