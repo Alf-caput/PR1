@@ -98,6 +98,27 @@ void insertarAlFinal(ElementoLista dato, Lista lista)
 
 void insertarEnPos(ElementoLista dato, int pos, Lista lista)
 {
+	int i = 0;
+	Nodo actual = lista -> cabeza;
+	Nodo aux;
+	Nodo temp;
+	if (pos == 0)
+	{
+		actual = _crearNodo(dato);
+		actual -> sig = lista -> cabeza;
+		lista -> cabeza = actual;
+	}
+	else
+	{
+		while (actual -> sig != NULL && i < pos-1)
+		{
+			i++;
+			actual = actual -> sig;
+		}
+		aux = actual -> sig;
+		actual -> sig = _crearNodo(dato);
+		actual -> sig -> sig = aux;
+	}
 	return;
 }
 
@@ -156,4 +177,4 @@ void eliminarLista(Lista lista)
 		free(aux);
 		aux = NULL;
 	}
-}        
+}  
