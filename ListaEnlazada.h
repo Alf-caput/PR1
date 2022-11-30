@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 typedef struct
 {
@@ -27,6 +28,7 @@ Lista crearLista();
 void mostrarLista(Lista lista);
 void insertarAlFinal(ElementoLista dato, Lista lista);
 void insertarEnPos(ElementoLista dato, int pos, Lista lista);
+bool estaEnLista(ElementoLista dato, Lista lista);
 void borrarElemento(ElementoLista dato, Lista lista);
 void eliminarLista(Lista lista);
 
@@ -129,9 +131,19 @@ void borrarElemento(ElementoLista dato, Lista lista)
 	return;
 }  
 
-void estaEnLista()
+bool estaEnLista(ElementoLista dato, Lista lista)
 {
-	return;
+	Nodo aux = lista -> cabeza;
+	while (aux != NULL)
+	{
+		if (aux -> dato.longitud == dato.longitud && 
+			aux -> dato.latitud == dato.latitud)
+		{
+			return true;
+		}
+		aux = aux -> sig;
+	}
+	return false;
 }
 
 void eliminarLista(Lista lista)

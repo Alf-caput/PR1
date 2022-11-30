@@ -106,6 +106,15 @@ void introducirGeoLocalizacion(Lista lista)
 	ElementoLista aux;
 	printf("Introduzca la longitud y la latitud de la coordenada que desea introducir (longitud;latitud): ");
 	scanf("%lf;%lf",&aux.longitud,&aux.latitud);
+	if (estaEnLista(aux, lista))
+	{
+		printf("La geolocalizacion ya estaba en la lista.\n");
+		printf("Debe introducir una geolocalizacion no repetida.\n");
+	}
+	else
+	{
+		/* code */
+	}
 	return;
 }
 
