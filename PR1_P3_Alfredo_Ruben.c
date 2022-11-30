@@ -17,6 +17,8 @@
 
 void leerFichero(Lista lista);
 void mostrar(Lista lista);
+void introducirGeoLocalizacion(Lista lista);
+void eliminarGeoLocalizacion(Lista lista);
 
 int main()
 {
@@ -28,8 +30,7 @@ int main()
 	do {
 		printf("====================================================================================================\
 	    \n                                     MENU\
-	    \n====================================================================================================\n");
-		printf("----------------------------------------------------------------------------------------------\n");
+	    \n====================================================================================================");
 	    printf("\n  1.  Introducir geolocalizacion.\
 	    \n  2.  Eliminar geolocalizacion.\
 	    \n  3.  Mostrar lista.\
@@ -41,10 +42,10 @@ int main()
 		switch(opc)
 		{
 			case 1:
-				printf("Introduzca la longitud y la latitud de la coordenada: ");
-				scanf("%lf;%lf",&longitud,&latitud);
+				introducirGeoLocalizacion(lista);
 				break;
 			case 2:
+				eliminarGeoLocalizacion(lista);
 				break;
 			case 3:
 				mostrar(lista);
@@ -96,5 +97,22 @@ void mostrar(Lista lista)
     printf("Mostrando lista enlazada con geolocalizaciones\n");
     printf("----------------------------------------------------------------------------------------------\n");
 	mostrarLista(lista);
+	return;
+}
+
+void introducirGeoLocalizacion(Lista lista)
+{
+	ElementoLista aux;
+	printf("Introduzca la longitud y la latitud de la coordenada que desea introducir (longitud;latitud): ");
+	scanf("%lf;%lf",&aux.longitud,&aux.latitud);
+	return;
+}
+
+void eliminarGeoLocalizacion(Lista lista)
+{
+	ElementoLista aux;
+	printf("Introduzca la longitud y la latitud de la coordenada que desea eliminar (longitud;latitud): ");
+	scanf("%lf;%lf", &aux.longitud, &aux.latitud);
+	eliminarElemento(aux, lista);
 	return;
 }

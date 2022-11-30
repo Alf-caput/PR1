@@ -26,7 +26,7 @@ Nodo _crearNodo(ElementoLista dato);
 Lista crearLista();
 void mostrarLista(Lista lista);
 void insertarAlFinal(ElementoLista dato, Lista lista);
-// void eliminarElemento(ElementoLista dato, Lista lista);
+void eliminarElemento(ElementoLista dato, Lista lista);
 
 Nodo _crearNodo(ElementoLista dato)
 {
@@ -67,9 +67,9 @@ void mostrarLista(Lista lista)
 			actual = actual -> sig, i++
 			)
 		{
-			printf("geo[%d]: longitud=%lf, latitud=%lf -> \n", i, actual->dato.longitud, actual->dato.longitud);
+			printf("geo[%d]: longitud=%lf, latitud=%lf -> \n", i, actual->dato.longitud, actual->dato.latitud);
 		}
-		printf("NULL");
+		printf("NULL\n");
 	}
 	return;
 }
