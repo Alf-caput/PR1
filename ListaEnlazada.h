@@ -1,77 +1,89 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct nodo Nodo;
-
-typedef struct lista Lista;
-
 typedef struct
 {
 	double longitud;
 	double latitud;
 }ElementoLista;
 
-struct nodo
+typedef struct
 {
-	ElementoLista elemento;
-	struct nodo* sig;
-};
+	ElementoLista dato;
+	_Nodo* sig;
+}_Nodo;
 
-struct lista
-{
-	Nodo* cabeza;
-};
+typedef _Nodo* Nodo;
 
-Nodo *crearNodo(ElementoLista elemento)
+typedef struct
 {
-	Nodo* nuevoNodo = malloc(sizeof(Nodo));
-	if (!nuevoNodo) 
+	Nodo cabeza;
+}_Lista;
+
+typedef _Lista* Lista;
+
+Nodo crearNodo(ElementoLista dato);
+Lista crearLista();
+void mostrarLista(Lista lista);
+
+Nodo crearNodo(ElementoLista dato)
+{
+	Nodo nuevoNodo = (Nodo) malloc(sizeof(_Nodo));
+	if (!nuevoNodo)
 	{
     	return NULL;
   	}
-	nuevoNodo -> elemento = elemento;
+	nuevoNodo -> dato = dato;
 	nuevoNodo -> sig = NULL;
 	return nuevoNodo;
 }
 
-Lista* hacerLista()
+Lista crearLista()
 {
-	Lista* lista = malloc(sizeof(Lista));
+	Lista lista = (Lista) malloc(sizeof(_Lista));
 	if (!lista) 
 	{
     	return NULL;
   	}
-	lista->cabeza = NULL;
+	lista -> cabeza = NULL;
 	return lista;
 }
 
-void mostrarLista(Lista* lista)
+void mostrarLista(Lista lista)
 {
-	Nodo* actual = lista->cabeza;
-	if(lista->cabeza == NULL) 
-    	return;
-	for(; actual != NULL; actual = actual->sig) 
-	{
-		printf("%d\n", actual->elemento);
-	}
-}
-
-void insertarElemento(ElementoLista elemento, Lista* lista)
-{
-	Nodo* actual = NULL;
+	int i;
+	Nodo actual;
 	if(lista -> cabeza == NULL)
+	{
+		printf("No habia elementos en la lista.\n");
+	}
+	for(
+		actual = lista -> cabeza, i = 0;
+		actual != NULL;
+		actual = actual -> sig, i++
+		)
+	{
+		printf("geo[%d]: longitud=%lf, latitud=%lf\n", i, actual->dato.longitud, actual->dato.longitud);
+	}
+	return;
+}
+/*
+void insertarElemento(ElementoLista dato, Lista lista)
+{
+	Nodo actual = lista -> cabeza;
+	if(actual == NULL)
 	{
 		lista -> cabeza = crearNodo(elemento);
 	}
 	else 
 	{
-    	actual = lista -> cabeza; 
     	while (actual -> sig != NULL)
 		{
       		actual = actual -> sig;
     	}
 		actual -> sig = crearNodo(elemento);
 	}
+	return;
 }
 
 void eliminarElemento(ElementoLista elemento, Lista* lista)
@@ -92,3 +104,4 @@ void eliminarElemento(ElementoLista elemento, Lista* lista)
     	actual = actual -> sig;        
   	}                                 
 }                 
+*/
