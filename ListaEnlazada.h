@@ -1,94 +1,106 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct nodo Nodo;
-
-typedef struct lista Lista;
-
 typedef struct
 {
 	double longitud;
 	double latitud;
 }ElementoLista;
 
-struct nodo
+typedef struct _Nodo
 {
-	ElementoLista elemento;
-	struct nodo* sig;
-};
+	ElementoLista dato;
+	struct _Nodo* sig;
+}_Nodo;
 
-struct lista
+typedef _Nodo* Nodo;
+
+typedef struct
 {
-	Nodo* cabeza;
-};
-/*Ruben haz que las funciones devuelvan Nodo pero que no se sepan que es un puntero*/
-Nodo *crearNodo(ElementoLista elemento)
+	Nodo cabeza;
+}_Lista;
+
+typedef _Lista* Lista;
+
+Nodo _crearNodo(ElementoLista dato);
+Lista crearLista();
+void mostrarLista(Lista lista);
+void insertarAlFinal(ElementoLista dato, Lista lista);
+void insertarPosicionElemento(ElementoLista dato, Lista lista,int pos);
+void limpiar(Nodo cabeza);
+// void eliminarElemento(ElementoLista dato, Lista lista);
+
+Nodo _crearNodo(ElementoLista dato)
 {
-	Nodo* nuevoNodo = malloc(sizeof(Nodo));
-	if (!nuevoNodo) 
+	Nodo nuevoNodo = (Nodo) malloc(sizeof(_Nodo));
+	if (!nuevoNodo)
 	{
     	return NULL;
   	}
-	nuevoNodo -> elemento = elemento;
+	nuevoNodo -> dato = dato;
 	nuevoNodo -> sig = NULL;
 	return nuevoNodo;
 }
 
-Lista* hacerLista()
+Lista crearLista()
 {
-	Lista* lista = malloc(sizeof(Lista));
+	Lista lista = (Lista) malloc(sizeof(_Lista));
 	if (!lista) 
 	{
     	return NULL;
   	}
-	lista->cabeza = NULL;
+	lista -> cabeza = NULL;
 	return lista;
 }
 
-void mostrarLista(Lista* lista)
+void mostrarLista(Lista lista)
 {
-	Nodo* actual = lista->cabeza;
-	if(lista->cabeza == NULL) 
-    	return;
-	for(; actual != NULL; actual = actual->sig) 
-	{
-		printf("%d\n", actual->elemento);
-	}
-}
-
-void insertarElemento(ElementoLista elemento, Lista* lista)
-{
-	Nodo* actual = NULL;
+	int i;
+	Nodo actual;
 	if(lista -> cabeza == NULL)
 	{
-		lista -> cabeza = crearNodo(elemento);
+		printf("No habia elementos en la lista.\n");
+	}
+	else
+	{
+		for(
+			actual = lista -> cabeza, i = 0;
+			actual != NULL;
+			actual = actual -> sig, i++
+			)
+		{
+			printf("geo[%d]: longitud=%lf, latitud=%lf -> \n", i, actual->dato.longitud, actual->dato.longitud);
+		}
+		printf("NULL");
+	}
+	return;
+}
+
+void insertarAlFinal(ElementoLista dato, Lista lista)
+{
+	Nodo actual = lista -> cabeza;
+	if(actual == NULL)
+	{
+		lista -> cabeza = _crearNodo(dato);
 	}
 	else 
 	{
-    	actual = lista -> cabeza; 
     	while (actual -> sig != NULL)
 		{
       		actual = actual -> sig;
     	}
-		actual -> sig = crearNodo(elemento);
+		actual -> sig = _crearNodo(dato);
 	}
+	return;
 }
 
-void eliminarElemento(ElementoLista elemento, Lista* lista)
+void limpiar(Nodo cabeza)
 {
-	Nodo* actual = lista -> cabeza;            
-	Nodo* ant = actual;           
-	while(actual != NULL)
+	Nodo paux;
+	while (cabeza != NULL)
 	{
-		if(actual -> elemento == elemento)
-		{      
-			ant -> sig = actual -> sig;
-      		if(actual == lista -> cabeza)
-        		lista -> cabeza = actual -> sig;
-      		free(actual);
-      		return;
-		}
-    	ant = actual;             
-    	actual = actual -> sig;        
-  	}                                 
-}                 
+		paux = cabeza;
+		cabeza = cabeza -> sig;
+		free(paux);
+	}
+}           
