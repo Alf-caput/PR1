@@ -15,37 +15,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void leerGeolocalizacion(Lista *lista);
+void leerFichero(Lista lista);
+void mostrar(Lista lista);
 
 int main()
 {
-	Lista lista;
+	Lista lista = crearLista();
 	int line_count;
-	ElementoLista aux;
 	int opc;
-	float longitud, latitud;
-	FILE *pfich;
-	pfich = fopen("fichnum.csv", "r");
-	int i;
-	if (pfich == NULL)
-	{
-		printf("Error: no se puede abrir el archivo fichnum.csv");
-	}
-	else
-	{
-		printf("Leyendo el fichero...\n");
-		for(
-			line_count = 0; 
-			fscanf(pfich,"%lf;%lf",&aux.longitud, &aux.latitud) == 2;
-			line_count++)
-		{
-			insertarInicio(aux,lista);
-		}
-	}
-	do{
-		printf("==========================================================================\
+	double longitud, latitud;
+	leerFichero(lista);
+	do {
+		printf("====================================================================================================\
 	    \n                                     MENU\
-	    \n==========================================================================");
+	    \n====================================================================================================\n");
+		printf("----------------------------------------------------------------------------------------------\n");
 	    printf("\n  1.  Introducir geolocalizacion.\
 	    \n  2.  Eliminar geolocalizacion.\
 	    \n  3.  Mostrar lista.\
@@ -58,12 +42,12 @@ int main()
 		{
 			case 1:
 				printf("Introduzca la longitud y la latitud de la coordenada: ");
-				scanf("%f , %f \n",&longitud,&latitud);
-				//leerGeolocalizacion(longitud,latitud);
+				scanf("%lf;%lf",&longitud,&latitud);
 				break;
 			case 2:
 				break;
 			case 3:
+				mostrar(lista);
 				break;
 			case 4:
 				printf("Saliendo del programa...\n");
@@ -77,4 +61,40 @@ int main()
 	    system("cls");
     }while (opc != 4);    
 	return 0;
+}
+
+void leerFichero(Lista lista)
+{
+    int line_count;
+    ElementoLista aux;
+
+    FILE *pfich = fopen("fichnum.csv", "r");
+
+    if (pfich == NULL) {
+        printf("Error al abrir el fichero \"fichnum.csv\"\n");
+    }
+    else
+    {   
+        for (
+            line_count = 0;
+            fscanf(pfich, "%lf;%lf", &aux.longitud, &aux.latitud) == 2;
+            line_count++
+        )
+        {
+			insertarAlFinal(aux, lista);
+        }
+        if (fclose(pfich) != 0) {
+            printf("Error al cerrar el fichero \"fichnum.csv\"\n");
+        }
+    }
+    return;
+}
+
+void mostrar(Lista lista)
+{
+	printf("----------------------------------------------------------------------------------------------\n");
+    printf("Mostrando lista enlazada con geolocalizaciones\n");
+    printf("----------------------------------------------------------------------------------------------\n");
+	mostrarLista(lista);
+	return;
 }
