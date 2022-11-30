@@ -27,7 +27,7 @@ Lista crearLista();
 void mostrarLista(Lista lista);
 void insertarAlFinal(ElementoLista dato, Lista lista);
 void insertarPosicionElemento(ElementoLista dato, Lista lista,int pos);
-void limpiar(Nodo cabeza);
+void eliminarLista(Lista lista)
 // void eliminarElemento(ElementoLista dato, Lista lista);
 
 Nodo _crearNodo(ElementoLista dato)
@@ -94,13 +94,14 @@ void insertarAlFinal(ElementoLista dato, Lista lista)
 	return;
 }
 
-void limpiar(Nodo cabeza)
+void eliminarLista(Lista lista)
 {
-	Nodo paux;
-	while (cabeza != NULL)
+	Nodo aux;
+	while (lista -> cabeza != NULL)
 	{
-		paux = cabeza;
-		cabeza = cabeza -> sig;
-		free(paux);
+		aux = lista -> cabeza;
+		lista -> cabeza = lista -> cabeza -> sig;
+		free(aux);
+		aux = NULL;
 	}
-}           
+}         
