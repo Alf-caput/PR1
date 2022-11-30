@@ -94,21 +94,30 @@ void insertarAlFinal(ElementoLista dato, Lista lista)
 
 void eliminarElemento(ElementoLista dato, Lista lista)
 {
-	int i;
-	Nodo actual;
-	Nodo anterior;
-	for (
-		actual = lista -> cabeza;
-		actual != NULL;
-		anterior = anterior -> sig)
+	Nodo temp;
+	if (
+		lista -> cabeza -> dato.longitud == dato.longitud && 
+		lista -> cabeza -> dato.latitud == dato.latitud)
 	{
-		if (actual -> dato.longitud == dato.longitud &&
-			actual -> dato.latitud == dato.latitud)
-		{
-			anterior -> sig = actual -> sig;
-			free(actual);
-		}
-		actual = actual -> sig;
+		temp = lista -> cabeza;
+		lista -> cabeza = lista -> cabeza -> sig;
+		free(temp);
 	}
-	return;                             
-}                 
+	Nodo actual = lista -> cabeza;
+	while (actual -> sig != NULL)
+	{
+		if (actual -> sig -> dato.longitud == dato.longitud && 
+			actual -> sig -> dato.latitud == dato.latitud)
+		{
+			temp = actual -> sig;
+			actual -> sig = actual -> sig -> sig;
+			free(temp);
+			temp = NULL;
+		}
+		else
+		{
+			actual = actual -> sig;
+		}
+	}
+	return;
+}  
