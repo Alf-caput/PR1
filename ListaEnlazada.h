@@ -26,6 +26,7 @@ Nodo _crearNodo(ElementoLista dato);
 Lista crearLista();
 void mostrarLista(Lista lista);
 void insertarAlFinal(ElementoLista dato, Lista lista);
+void insertarEnPos(ElementoLista dato, int pos, Lista lista);
 void borrarElemento(ElementoLista dato, Lista lista);
 void eliminarLista(Lista lista);
 
@@ -93,6 +94,11 @@ void insertarAlFinal(ElementoLista dato, Lista lista)
 	return;
 }
 
+void insertarEnPos(ElementoLista dato, int pos, Lista lista)
+{
+	return;
+}
+
 void borrarElemento(ElementoLista dato, Lista lista)
 {
 	Nodo temp;
@@ -122,6 +128,11 @@ void borrarElemento(ElementoLista dato, Lista lista)
 	}
 	return;
 }  
+
+void estaEnLista()
+{
+	return;
+}
 
 void eliminarLista(Lista lista)
 {
