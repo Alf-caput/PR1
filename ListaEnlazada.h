@@ -25,6 +25,7 @@ typedef _Lista* Lista;
 
 Nodo _crearNodo(ElementoLista dato);
 Lista crearLista();
+bool esListaVacia(Lista lista);
 void mostrarLista(Lista lista);
 void insertarAlFinal(ElementoLista dato, Lista lista);
 void insertarEnPos(ElementoLista dato, int pos, Lista lista);
@@ -55,11 +56,23 @@ Lista crearLista()/*Crea una lista vacia*/
 	return lista;
 }
 
+bool esListaVacia(Lista lista)
+{
+	if (lista -> cabeza == NULL)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void mostrarLista(Lista lista)/*Muestra la lista*/
 {
 	int i;
 	Nodo actual;
-	if(lista -> cabeza == NULL)
+	if(esListaVacia(lista))
 	{
 		printf("No habia elementos en la lista.\n");
 	}
@@ -80,13 +93,14 @@ void mostrarLista(Lista lista)/*Muestra la lista*/
 
 void insertarAlFinal(ElementoLista dato, Lista lista)/*Inserta un elemento al final de la lista*/
 {
-	Nodo actual = lista -> cabeza;
-	if(actual == NULL)
+	Nodo actual;
+	if(esListaVacia(lista))
 	{
 		lista -> cabeza = _crearNodo(dato);
 	}
 	else 
 	{
+		actual = lista -> cabeza;
     	while (actual -> sig != NULL)
 		{
       		actual = actual -> sig;
@@ -174,7 +188,7 @@ bool estaEnLista(ElementoLista dato, Lista lista)/*Devuelve true si el elemento 
 void eliminarLista(Lista lista)/*Elimina la lista de memoria*/
 {
 	Nodo aux;
-	while (lista -> cabeza != NULL)
+	while (!esListaVacia(lista))
 	{
 		aux = lista -> cabeza;
 		lista -> cabeza = lista -> cabeza -> sig;
