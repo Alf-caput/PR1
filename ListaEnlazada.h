@@ -123,29 +123,34 @@ void insertarEnPos(ElementoLista dato, int pos, Lista lista)/*Inserta un element
 
 void borrarElemento(ElementoLista dato, Lista lista)/*Borra un elemento de la lista*/
 {
-	Nodo temp;
-	if (
-		lista -> cabeza -> dato.longitud == dato.longitud && 
-		lista -> cabeza -> dato.latitud == dato.latitud)
+	Nodo actual;
+	Nodo aux;
+	if (esListaVacia(lista))
 	{
-		temp = lista -> cabeza;
-		lista -> cabeza = lista -> cabeza -> sig;
-		free(temp);
+		printf("No habia elementos en la lista.\n");
 	}
-	Nodo actual = lista -> cabeza;
-	while (actual -> sig != NULL)
+	else
 	{
-		if (actual -> sig -> dato.longitud == dato.longitud && 
-			actual -> sig -> dato.latitud == dato.latitud)
+		for (
+			actual = lista -> cabeza;
+			actual != NULL;
+			aux = actual, actual = actual -> sig)
 		{
-			temp = actual -> sig;
-			actual -> sig = actual -> sig -> sig;
-			free(temp);
-			temp = NULL;
-		}
-		else
-		{
-			actual = actual -> sig;
+			if (actual -> dato.longitud == dato.longitud && 
+				actual -> dato.latitud == dato.latitud)
+			{
+				if (actual == lista -> cabeza)
+				{
+					lista -> cabeza = lista -> cabeza -> sig;
+				}
+				else
+				{
+					aux -> sig = actual -> sig;
+					
+				}
+				free(actual);
+				actual = aux;
+			}
 		}
 	}
 	return;
