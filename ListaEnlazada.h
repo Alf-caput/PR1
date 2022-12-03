@@ -112,25 +112,27 @@ void insertarAlFinal(ElementoLista dato, Lista lista)/*Inserta un elemento al fi
 
 void insertarEnPos(ElementoLista dato, int pos, Lista lista)/*Inserta un elemento en la posicion introducida por el ususario*/
 {
-	int i = 0;
-	Nodo actual = lista -> cabeza;
+	Nodo actual;
 	Nodo aux;
-	if (pos == 0)
+	int i;
+	if (esListaVacia(lista) || pos <= 0)
 	{
-		actual = _crearNodo(dato);
-		actual -> sig = lista -> cabeza;
-		lista -> cabeza = actual;
+		aux = _crearNodo(dato);
+		aux -> sig = lista -> cabeza;
+		lista -> cabeza = aux;
 	}
 	else
 	{
+		i = 0;
+		actual = lista -> cabeza;
 		while (actual -> sig != NULL && i < pos-1)
 		{
-			i++;
 			actual = actual -> sig;
+			i++;
 		}
-		aux = actual -> sig;
-		actual -> sig = _crearNodo(dato);
-		actual -> sig -> sig = aux;
+		aux = _crearNodo(dato);
+		aux -> sig = actual -> sig;
+		actual -> sig = aux;
 	}
 	return;
 }
